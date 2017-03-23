@@ -2,8 +2,9 @@
 
 Install and edit config file.
 ```baah
-$ go install github.com/jezman/orion./orion
-$ vim $GOPATH/src/github.com/jezman/orion/config.json
+$ go get github.com/jezman/orion./orion
+$ cd $GOPATH/src/github.com/jezman/orion
+$ vim comfig.json
 ```
 config.json
 ```json
@@ -16,15 +17,22 @@ config.json
 ```
 ```bash
 $ orion -h
-Usage of orion:
-  -door string
-    	List all doors with indexes.
-  -end string
-    	End of time range. Format: "31.12.2017 23:59" (default "21.03.2017 23:59")
-  -list
-    	List all doors.
-  -name string
-    	User last name.
-  -start string
-    	Start of time rande. Format: "31.12.2017 23:59" (default "21.03.2017 00:00")
+
+NAME:
+   OrionCLI - generates a reports for Bolid access control system "Orion Pro"
+
+USAGE:
+   orion [global options] command
+
+COMMANDS:
+     generate, g    generate a report
+     listdoors, ld  list all doors with indexes
+     help, h        Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --door value, -d value   door index. For show all doors indexes use: orion ld
+   --first value, -f value  first date of a report (default: "23.03.2017 00:00")
+   --last value, -l value   last date of a report (default: "23.03.2017 23:59")
+   --user value, -u value   user last name
+   --help, -h               show help
 ```
