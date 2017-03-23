@@ -60,10 +60,6 @@ func readConfigFile() config {
 	return conf
 }
 
-func connectionToDB() {
-
-}
-
 func executeQuery(query string) error {
 	var conf = readConfigFile()
 
