@@ -25,12 +25,13 @@ type door struct {
 	Name string
 }
 
-type coWorker struct {
+type employee struct {
 	LastName  string
 	FirstName string
 	MidName   string
 	Company   string
-	Time      time.Time
+	FirstTime time.Time
+	LastTime  time.Time
 	Events    string
 	Door      string
 }
@@ -70,6 +71,7 @@ func executeQuery(query string) error {
 	err = db.Ping()
 	checkError("Cannot connect: ", err)
 	defer db.Close()
+
 	rows, err := db.Query(query)
 	checkError("Query:", err)
 	defer rows.Close()
@@ -88,27 +90,46 @@ func executeQuery(query string) error {
 	}
 	fmt.Println()
 
-	if len(cols) == 2 {
-		for rows.Next() {
-			d := door{}
-			err := rows.Scan(&d.ID, &d.Name)
-			checkError("Cols:", err)
+	row := func(cmd ...interface{}) {
+		err := rows.Scan(cmd...)
+		checkError("Cols:", err)
+	}
+
+	for rows.Next() {
+		d := door{}
+		mem := employee{}
+		switch {
+		case len(cols) == 2:
+			row(&d.ID, &d.Name)
 			fmt.Printf("%-4d %s\n", d.ID, d.Name)
-		}
-	} else {
-		//coWorkers := []coWorker{}
-		for rows.Next() {
-			mem := coWorker{}
-			err := rows.Scan(&mem.LastName, &mem.FirstName, &mem.MidName, &mem.Company, &mem.Time, &mem.Events, &mem.Door)
-			checkError("Cols:", err)
-			//coWorkers = append(coWorkers, mem)
-			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %-30s\n", mem.LastName, mem.FirstName, mem.MidName, mem.Company, mem.Time.Format("02-01-2006 15:04:05"), mem.Events, mem.Door)
+		case len(cols) == 6:
+			row(&mem.LastName, &mem.FirstName, &mem.MidName, &mem.Company, &mem.FirstTime, &mem.LastTime)
+			diff := mem.LastTime.Sub(mem.FirstTime)
+			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %s\n", mem.LastName, mem.FirstName, mem.MidName, mem.Company, mem.FirstTime.Format("02-01-2006 15:04:05"), mem.LastTime.Format("02-01-2006 15:04:05"), diff)
+		case len(cols) == 7:
+			row(&mem.LastName, &mem.FirstName, &mem.MidName, &mem.Company, &mem.FirstTime, &mem.Events, &mem.Door)
+			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %-30s\n", mem.LastName, mem.FirstName, mem.MidName, mem.Company, mem.FirstTime.Format("02-01-2006 15:04:05"), mem.Events, mem.Door)
 		}
 	}
 	return nil
 }
 
-func generate() {
+func worked() {
+	query := []string{"SELECT p.Name AS Фамилия, p.FirstName AS Имя, p.MidName AS Отчество, c.Name as Компания, min(TimeVal) AS Приход, max(TimeVal) AS Уход ",
+		"FROM dbo.pLogData l ",
+		"JOIN dbo.pList p ON (p.ID = l.HozOrgan) ",
+		"JOIN dbo.pCompany c ON (c.ID = p.Company) ",
+		"WHERE TimeVal BETWEEN '", firstDate, "' AND '", lastDate, "'",
+		" AND p.Name = '", user, "'",
+		" GROUP BY p.Name, p.FirstName, p.MidName, c.Name",
+	}
+	if user == "" {
+		query = append(query[:9], query[12])
+	}
+	executeQuery(strings.Join(query, ""))
+}
+
+func summary() {
 	query := []string{"SELECT p.Name AS Фамилия, p.FirstName AS Имя, p.MidName AS Отчество, c.Name as Компания, TimeVal AS Время, e.Contents AS Событие, a.Name AS Дверь ",
 		"FROM dbo.pLogData l ",
 		"JOIN dbo.pList p ON (p.ID = l.HozOrgan) ",
@@ -125,7 +146,7 @@ func generate() {
 	orderBy := "' ORDER BY TimeVal"
 
 	add := func(cmd ...string) {
-		query = append(query[0:len(query)-1], cmd...)
+		query = append(query[:len(query)-1], cmd...)
 	}
 
 	if doorID != "" && user != "" {
@@ -136,14 +157,13 @@ func generate() {
 		add(doorIndex[1:], doorID, orderBy[1:])
 	}
 	executeQuery(strings.Join(query, ""))
-
 }
 
 func main() {
-	// Default first and last date + time
+	// Default first and last date
 	timeNow := time.Now().Local()
-	firstHourOfDay := timeNow.Format("02.01.2006") + " 00:00"
-	lastHourOfDay := timeNow.Format("02.01.2006") + " 23:59"
+	firstHourOfDay := timeNow.Format("02.01.2006")
+	lastHourOfDay := timeNow.AddDate(0, 0, 1).Format("02.01.2006")
 
 	app := cli.NewApp()
 
@@ -182,11 +202,20 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name:    "generate",
-			Aliases: []string{"g"},
-			Usage:   "generate a report",
+			Name:    "hours",
+			Aliases: []string{"h"},
+			Usage:   "number of hours worked by the employee",
 			Action: func(c *cli.Context) error {
-				generate()
+				worked()
+				return nil
+			},
+		},
+		{
+			Name:    "summary",
+			Aliases: []string{"s"},
+			Usage:   "generate a summary report",
+			Action: func(c *cli.Context) error {
+				summary()
 				return nil
 			},
 		},
