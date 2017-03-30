@@ -1,12 +1,12 @@
-# Reports for Orion Pro(MS SQL Database).
+# Отчеты для НВП Болид "Орион ПРО"(MS SQL Database).
 
-first step - edit config file.
-```baah
-$ go get github.com/jezman/orion./orion
-$ cd $GOPATH/src/github.com/jezman/orion
+Сперва устанавливаем [Go](https://golang.org/).
+Далее:
+```bash
+$ go get github.com/jezman/gorion
+$ cd $GOPATH/src/github.com/jezman/gorion
 $ vim comfig.json
 ```
-config.json
 ```json
 {
     "server": "127.0.0.1",
@@ -16,23 +16,24 @@ config.json
 }
 ```
 ```bash
-$ orion -h
-NAME:
-   OrionCLI - generates a reports for Bolid access control system "Orion Pro"
+$ go build
+$ ./gorion -h
 
-USAGE:
-   orion [global options] command
+ИМЯ:
+   gorion - создает отчеты для системы контроля доступом НВП Болид "Орион ПРО"
+ИСПОЛЬЗОВАНИЕ:
+   gorion [глобальные параметры] команда
 
-COMMANDS:
-     hours, h       number of hours worked by the employee
-     listdoors, ld  list all doors with indexes
-     summary, s     generate a summary report
-     help, h        Shows a list of commands or help for one command
+КОМАНДЫ:
+   hours, h       приход и уход сотрудников + их отработанное время
+   listdoors, ld  список всех дверей с id
+   summary, s     общий отчет
+   help, h        Shows a list of commands or help for one command
 
-GLOBAL OPTIONS:
-   --door value, -d value   door index. For show all doors indexes use: orion ld
-   --first value, -f value  first date of a report (default: "24.03.2017")
-   --last value, -l value   last date of a report (default: "25.03.2017")
-   --user value, -u value   user last name
-   --help, -h               show help
+ГЛОБАЛЬНЫЕ ПАРАМЕТРЫ:
+   --door value, -d value      id двери. для просмотра списка всех дверей введите: gorion ld
+   --employee value, -e value  фамилия сотрудника
+   --first value, -f value     первая дата (default: "30.03.2017")
+   --last value, -l value      последняя дата (default: "31.03.2017")
+   --help, -h                  show help
 ```

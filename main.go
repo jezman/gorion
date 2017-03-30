@@ -25,7 +25,7 @@ type door struct {
 	Name string
 }
 
-type employee struct {
+type event struct {
 	LastName  string
 	FirstName string
 	MidName   string
@@ -96,32 +96,33 @@ func executeQuery(query string) error {
 	}
 
 	for rows.Next() {
-		d := door{}
-		mem := employee{}
+		door := door{}
+		event := event{}
 		switch {
 		case len(cols) == 2:
-			row(&d.ID, &d.Name)
-			fmt.Printf("%-4d %s\n", d.ID, d.Name)
+			row(&door.ID, &door.Name)
+			fmt.Printf("%-4d %s\n", door.ID, door.Name)
 		case len(cols) == 6:
-			row(&mem.LastName, &mem.FirstName, &mem.MidName, &mem.Company, &mem.FirstTime, &mem.LastTime)
-			diff := mem.LastTime.Sub(mem.FirstTime)
-			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %s\n", mem.LastName, mem.FirstName, mem.MidName, mem.Company, mem.FirstTime.Format("02-01-2006 15:04:05"), mem.LastTime.Format("02-01-2006 15:04:05"), diff)
+			row(&event.LastName, &event.FirstName, &event.MidName, &event.Company, &event.FirstTime, &event.LastTime)
+			diff := event.LastTime.Sub(event.FirstTime)
+
+			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %s\n", event.LastName, event.FirstName, event.MidName, event.Company, event.FirstTime.Format("02-01-2006 15:04:05"), event.LastTime.Format("02-01-2006 15:04:05"), diff)
 		case len(cols) == 7:
-			row(&mem.LastName, &mem.FirstName, &mem.MidName, &mem.Company, &mem.FirstTime, &mem.Events, &mem.Door)
-			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %-30s\n", mem.LastName, mem.FirstName, mem.MidName, mem.Company, mem.FirstTime.Format("02-01-2006 15:04:05"), mem.Events, mem.Door)
+			row(&event.LastName, &event.FirstName, &event.MidName, &event.Company, &event.FirstTime, &event.Events, &event.Door)
+			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %-30s\n", event.LastName, event.FirstName, event.MidName, event.Company, event.FirstTime.Format("02-01-2006 15:04:05"), event.Events, event.Door)
 		}
 	}
 	return nil
 }
 
-func worked() {
+func hours() {
 	query := []string{"SELECT p.Name AS Фамилия, p.FirstName AS Имя, p.MidName AS Отчество, c.Name as Компания, min(TimeVal) AS Приход, max(TimeVal) AS Уход ",
 		"FROM dbo.pLogData l ",
 		"JOIN dbo.pList p ON (p.ID = l.HozOrgan) ",
 		"JOIN dbo.pCompany c ON (c.ID = p.Company) ",
 		"WHERE TimeVal BETWEEN '", firstDate, "' AND '", lastDate, "'",
 		" AND p.Name = '", user, "'",
-		" GROUP BY p.Name, p.FirstName, p.MidName, c.Name",
+		" GROUP BY p.Name, p.FirstName, p.MidName, c.Name, CONVERT(varchar(20), TimeVal, 104)",
 	}
 	if user == "" {
 		query = append(query[:9], query[12])
@@ -160,42 +161,64 @@ func summary() {
 }
 
 func main() {
+	// EXAMPLE: Append to an existing template
+	cli.AppHelpTemplate = fmt.Sprintf(`%s
+
+WEBSITE: http://awesometown.example.com
+
+SUPPORT: support@awesometown.example.com
+
+`, cli.AppHelpTemplate)
+
+	// EXAMPLE: Override a template
+	cli.AppHelpTemplate = `ИМЯ:
+   {{.Name}} - {{.Usage}}
+ИСПОЛЬЗОВАНИЕ:
+   {{.HelpName}} {{if .VisibleFlags}}[глобальные параметры]{{end}}{{if .Commands}} команда {{end}}
+   {{if len .Authors}}
+AUTHOR:
+   {{range .Authors}}{{ . }}{{end}}
+   {{end}}{{if .Commands}}
+КОМАНДЫ:
+{{range .Commands}}{{if not .HideHelp}}   {{join .Names ", "}}{{ "\t"}}{{.Usage}}{{ "\n" }}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
+ГЛОБАЛЬНЫЕ ПАРАМЕТРЫ:
+   {{range .VisibleFlags}}{{.}}
+   {{end}}{{end}}
+`
 	// Default first and last date
 	timeNow := time.Now().Local()
 	firstHourOfDay := timeNow.Format("02.01.2006")
 	lastHourOfDay := timeNow.AddDate(0, 0, 1).Format("02.01.2006")
 
 	app := cli.NewApp()
-
-	app.Name = "OrionCLI"
-	//app.HelpName = "contrive"
-	app.Usage = "generates a reports for Bolid access control system \"Orion Pro\""
-	app.UsageText = "orion [global options] command"
+	app.Name = "gorion"
+	app.Usage = "создает отчеты для системы контроля доступом НВП Болид \"Орион ПРО\""
+	//app.UsageText = "gorion [global options] command"
 	app.HideVersion = true
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:        "user, u",
+			Name:        "employee, e",
 			Value:       "",
-			Usage:       "user last name",
+			Usage:       "фамилия сотрудника",
 			Destination: &user,
 		},
 		cli.StringFlag{
 			Name:        "door, d",
 			Value:       "",
-			Usage:       "door index. For show all doors indexes use: orion ld",
+			Usage:       "id двери. для просмотра списка всех дверей введите: gorion ld",
 			Destination: &doorID,
 		},
 		cli.StringFlag{
 			Name:        "first, f",
 			Value:       firstHourOfDay,
-			Usage:       "first date of a report",
+			Usage:       "первая дата",
 			Destination: &firstDate,
 		},
 		cli.StringFlag{
 			Name:        "last, l",
 			Value:       lastHourOfDay,
-			Usage:       "last date of a report",
+			Usage:       "последняя дата",
 			Destination: &lastDate,
 		},
 	}
@@ -204,16 +227,16 @@ func main() {
 		{
 			Name:    "hours",
 			Aliases: []string{"h"},
-			Usage:   "number of hours worked by the employee",
+			Usage:   "приход и уход сотрудников + их отработанное время",
 			Action: func(c *cli.Context) error {
-				worked()
+				hours()
 				return nil
 			},
 		},
 		{
 			Name:    "summary",
 			Aliases: []string{"s"},
-			Usage:   "generate a summary report",
+			Usage:   "общий отчет",
 			Action: func(c *cli.Context) error {
 				summary()
 				return nil
@@ -222,7 +245,7 @@ func main() {
 		{
 			Name:    "listdoors",
 			Aliases: []string{"ld"},
-			Usage:   "list all doors with indexes",
+			Usage:   "список всех дверей с id",
 			Action: func(c *cli.Context) error {
 				executeQuery("SELECT GIndex as ID, Name as Дверь from dbo.AcessPoint")
 				return nil
