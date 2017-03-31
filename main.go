@@ -64,7 +64,11 @@ func readConfigFile() config {
 func executeQuery(query string) error {
 	var conf = readConfigFile()
 
-	dsn := "server=" + conf.Server + ";user id=" + conf.User + ";password=" + conf.Password + ";database=" + conf.Database
+	dsn := "server=" + conf.Server +
+		";user id=" + conf.User +
+		";password=" + conf.Password +
+		";database=" + conf.Database
+
 	db, err := sql.Open("mssql", dsn)
 	checkError("Cannot connect: ", err)
 
@@ -103,13 +107,46 @@ func executeQuery(query string) error {
 			row(&door.ID, &door.Name)
 			fmt.Printf("%-4d %s\n", door.ID, door.Name)
 		case len(cols) == 6:
-			row(&event.LastName, &event.FirstName, &event.MidName, &event.Company, &event.FirstTime, &event.LastTime)
+			row(
+				&event.LastName,
+				&event.FirstName,
+				&event.MidName,
+				&event.Company,
+				&event.FirstTime,
+				&event.LastTime,
+			)
+
+			// Отработанное время
 			diff := event.LastTime.Sub(event.FirstTime)
 
-			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %s\n", event.LastName, event.FirstName, event.MidName, event.Company, event.FirstTime.Format("02-01-2006 15:04:05"), event.LastTime.Format("02-01-2006 15:04:05"), diff)
+			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %s\n",
+				event.LastName,
+				event.FirstName,
+				event.MidName,
+				event.Company,
+				event.FirstTime.Format("02-01-2006 15:04:05"),
+				event.LastTime.Format("02-01-2006 15:04:05"),
+				diff,
+			)
 		case len(cols) == 7:
-			row(&event.LastName, &event.FirstName, &event.MidName, &event.Company, &event.FirstTime, &event.Events, &event.Door)
-			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %-30s\n", event.LastName, event.FirstName, event.MidName, event.Company, event.FirstTime.Format("02-01-2006 15:04:05"), event.Events, event.Door)
+			row(
+				&event.LastName,
+				&event.FirstName,
+				&event.MidName,
+				&event.Company,
+				&event.FirstTime,
+				&event.Events,
+				&event.Door,
+			)
+			fmt.Printf("%-15s %-15s %-15s %-10s %-25s %-25s %-30s\n",
+				event.LastName,
+				event.FirstName,
+				event.MidName,
+				event.Company,
+				event.FirstTime.Format("02-01-2006 15:04:05"),
+				event.Events,
+				event.Door,
+			)
 		}
 	}
 	return nil
@@ -161,16 +198,6 @@ func summary() {
 }
 
 func main() {
-	// EXAMPLE: Append to an existing template
-	cli.AppHelpTemplate = fmt.Sprintf(`%s
-
-WEBSITE: http://awesometown.example.com
-
-SUPPORT: support@awesometown.example.com
-
-`, cli.AppHelpTemplate)
-
-	// EXAMPLE: Override a template
 	cli.AppHelpTemplate = `ИМЯ:
    {{.Name}} - {{.Usage}}
 ИСПОЛЬЗОВАНИЕ:
@@ -185,7 +212,7 @@ AUTHOR:
    {{range .VisibleFlags}}{{.}}
    {{end}}{{end}}
 `
-	// Default first and last date
+	// Значения по умолчанию для первой и последней даты
 	timeNow := time.Now().Local()
 	firstHourOfDay := timeNow.Format("02.01.2006")
 	lastHourOfDay := timeNow.AddDate(0, 0, 1).Format("02.01.2006")
@@ -193,7 +220,6 @@ AUTHOR:
 	app := cli.NewApp()
 	app.Name = "gorion"
 	app.Usage = "создает отчеты для системы контроля доступом НВП Болид \"Орион ПРО\""
-	//app.UsageText = "gorion [global options] command"
 	app.HideVersion = true
 
 	app.Flags = []cli.Flag{
