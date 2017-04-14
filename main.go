@@ -14,6 +14,9 @@ import (
 )
 
 var (
+	db        *sql.DB
+	err       error
+	rows      *sql.Rows
 	user      string
 	doorID    string
 	firstDate string
@@ -43,21 +46,19 @@ type config struct {
 	Password string
 }
 
-func checkError(str string, err error) {
-	if err != nil {
-		fmt.Println(str, err.Error())
-	}
-}
-
 func readConfigFile() config {
 	confFile, err := os.Open("config.json")
-	checkError("Read configuration file error:", err)
+	if err != nil {
+		fmt.Println("Read configuration file error:", err.Error())
+	}
 	defer confFile.Close()
 
 	decoder := json.NewDecoder(confFile)
 	conf := config{}
 	err = decoder.Decode(&conf)
-	checkError("Json decode error:", err)
+	if err != nil {
+		fmt.Println("Json decode error:", err.Error())
+	}
 	return conf
 }
 
@@ -69,19 +70,26 @@ func executeQuery(query string) error {
 		";password=" + conf.Password +
 		";database=" + conf.Database
 
-	db, err := sql.Open("mssql", dsn)
-	checkError("Cannot connect: ", err)
+	if db, err = sql.Open("mssql", dsn); err != nil {
+		fmt.Println("Cannot connect", err.Error())
 
-	err = db.Ping()
-	checkError("Cannot connect: ", err)
+	}
+
+	if err = db.Ping(); err != nil {
+		fmt.Println("Cannot connect", err.Error())
+	}
 	defer db.Close()
 
-	rows, err := db.Query(query)
-	checkError("Query:", err)
+	if rows, err = db.Query(query); err != nil {
+		fmt.Println("Query error", err.Error())
+	}
 	defer rows.Close()
 
 	cols, err := rows.Columns()
-	checkError("Cols:", err)
+	if err != nil {
+		fmt.Println("Cols error", err.Error())
+
+	}
 
 	if cols == nil {
 		return nil
@@ -95,8 +103,9 @@ func executeQuery(query string) error {
 	fmt.Println()
 
 	row := func(cmd ...interface{}) {
-		err := rows.Scan(cmd...)
-		checkError("Cols:", err)
+		if err := rows.Scan(cmd...); err != nil {
+			fmt.Println("Cols error", err.Error())
+		}
 	}
 
 	for rows.Next() {
