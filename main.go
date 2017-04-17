@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -60,6 +61,19 @@ func readConfigFile() config {
 		fmt.Println("Json decode error:", err.Error())
 	}
 	return conf
+}
+
+func validationUser(value string) {
+	if match, _ := regexp.MatchString(`^[а-яА-Я][а-яА-Я-_\.]{2,20}$`, user); !match {
+		os.Exit(1)
+	}
+
+}
+
+func validationDate(value string) {
+	if match, _ := regexp.MatchString(`(0[1-9]|[12][0-9]|3[01])[- ..](0[1-9]|1[012])[- ..][201]\d\d\d`, value); !match {
+		os.Exit(1)
+	}
 }
 
 func executeQuery(query string) error {
@@ -170,9 +184,15 @@ func hours() {
 		" AND p.Name = '", user, "'",
 		" GROUP BY p.Name, p.FirstName, p.MidName, c.Name, CONVERT(varchar(20), TimeVal, 104)",
 	}
+
+	validationUser(user)
+	validationDate(firstDate)
+	validationDate(lastDate)
+
 	if user == "" {
 		query = append(query[:9], query[12])
 	}
+
 	executeQuery(strings.Join(query, ""))
 }
 
@@ -187,6 +207,10 @@ func summary() {
 		" AND e.Event BETWEEN 26 AND 29",
 		"ORDER BY TimeVal",
 	}
+
+	validationUser(user)
+	validationDate(firstDate)
+	validationDate(lastDate)
 
 	pName := " AND p.Name = '"
 	doorIndex := "' AND DoorIndex = "
