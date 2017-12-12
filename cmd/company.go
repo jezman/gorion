@@ -30,7 +30,3 @@ var companyCmd = &cobra.Command{
 		fmt.Println(table.Render())
 	},
 }
-
-func init() {
-	rootCmd.AddCommand(companyCmd)
-}

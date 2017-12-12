@@ -4,12 +4,20 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/jezman/gorion/models"
 	"github.com/spf13/cobra"
 )
 
-var database models.Datastore
+var (
+	employee  string
+	door      uint
+	firstDate string
+	lastDate  string
+	database  models.Datastore
+	timeNow   = time.Now().Local()
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
