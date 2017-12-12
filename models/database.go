@@ -12,7 +12,7 @@ type Datastore interface {
 	Doors() ([]*Door, error)
 	Employees() ([]*Employee, error)
 	Events(string) ([]*Event, error)
-	// TimeWorked(string) ([]*Event, error)
+	WorkedTime(string) ([]*Event, error)
 }
 
 // Config file structure
