@@ -1,19 +1,21 @@
+# Gorion
 ## Reports view for access control system NVP Bolid "Orion Pro"
 
-### Installing
+## Installing
 
 Set environment variable **BOLID_DSN**:
 ```bash
 export BOLID_DSN="server=127.0.0.1;user id=username;password=passwd;database=base"
 ```
-Install Gorion:
+Install Gorion
+If you have [Go](https://golang.org/) installed: 
 ```bash
 go get github.com/jezman/gorion &&\
   cd $GOPATH/src/github.com/jezman/gorion &&\
   go install
 ```
-
-### Features
+Otherwise, please see [Go install](https://golang.org/doc/install).
+## Features
 
 - [List of](#lists)
   * [Company](#company-list)
@@ -23,7 +25,7 @@ go get github.com/jezman/gorion &&\
 - [Calculate employee worked time](#employees-worked-time)
 
 ```
-~ gorion --help
+$ gorion --help
 Reports view for access control system NVP Bolid 'Orion Pro'
 
 Usage:
@@ -41,9 +43,9 @@ Flags:
 Use "gorion [command] --help" for more information about a command.
 
 ```
-### Lists
+## Lists
 ```
-~ gorion list -h
+$ gorion list -h
 Get list of company, doors, employees
 
 Usage:
@@ -59,9 +61,9 @@ Flags:
 
 Use "gorion list [command] --help" for more information about a command.
 ```
-### Company list
+## Company list
 ```
-~ gorion list company
+$ gorion list company
 +----+---------+
 | #  | Company |
 +----+---------+
@@ -72,9 +74,9 @@ Use "gorion list [command] --help" for more information about a command.
 | 32 | Apple   |
 | 33 | Nissan  |
 ```
-### Doors list
+## Doors list
 ```
-~ gorion list doors
+$ gorion list doors
 +-----+----------------+
 | ID  | Door           |
 +-----+----------------+
@@ -85,9 +87,9 @@ Use "gorion list [command] --help" for more information about a command.
 | 66   | Bar           |
 | 67   | Rest room     |
 ```
-### Employees list
+## Employees list
 ```
-~ gorion list employees
+$ gorion list employees
 +-----+---------------+----------+
 | #   | Company       | Employee |
 +-----+---------------+----------+
@@ -95,13 +97,22 @@ Use "gorion list [command] --help" for more information about a command.
 | 2   | Steve Wozniak | Apple    |
 ...
 ```
-### Events
+## Events
 ```
-~ gorion events -h
+$ gorion events -h
 Displays a list of events depending on entered flags
 
 Usage:
   gorion events [flags]
+
+Aliases:
+  events, e
+
+Examples:
+  gorion events
+  gorion events --employee=lastname --first=05.08.2017
+  gorion e -e lastname -d 32
+  gorion e -d 2 -f 12.11.2017 -l 16.11.2107
 
 Flags:
   -d, --door uint         door ID. Use: 'gorion list doors' to get a list of all doors with ID.
@@ -110,13 +121,22 @@ Flags:
   -h, --help              help for events
   -l, --last string       last date. (default "13.12.2017")
 ```
-### Employees worked time
+## Employees worked time
 ```
-~ gorion hours -h
+$ gorion hours -h
 Displays employees worked time
 
 Usage:
   gorion hours [flags]
+
+Aliases:
+  hours, h
+
+Examples:
+  gorion hours
+  gorion hours --employee=lastname --first=05.08.2017 --last=07.08.2017
+  gorion h -e lastname
+  gorion h -f 12.11.2017 -l 16.11.2107
 
 Flags:
   -d, --door uint         door ID. Use: 'gorion list doors' to get a list of all doors with ID.
