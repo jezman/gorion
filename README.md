@@ -1,6 +1,6 @@
-Reports view for access control system NVP Bolid "Orion Pro"
-======
-# Installing
+## Reports view for access control system NVP Bolid "Orion Pro"
+
+### Installing
 
 Set environment variable **BOLID_DSN**:
 ```bash
@@ -11,7 +11,7 @@ Install Gorion:
 go install github.com/jezman/gorion
 ```
 
-# Features
+### Features
 
 - [List of](#lists)
   * [Company](#company-list)
@@ -39,7 +39,7 @@ Flags:
 Use "gorion [command] --help" for more information about a command.
 
 ```
-# Lists
+### Lists
 ```
 ~ gorion list -h
 Get list of company, doors, employees
@@ -57,7 +57,7 @@ Flags:
 
 Use "gorion list [command] --help" for more information about a command.
 ```
-## Company list
+### Company list
 ```
 ~ gorion list company
 +----+---------+
@@ -70,7 +70,7 @@ Use "gorion list [command] --help" for more information about a command.
 | 32 | Apple   |
 | 33 | Nissan  |
 ```
-## Doors list
+### Doors list
 ```
 ~ gorion list doors
 +-----+----------------+
@@ -83,7 +83,7 @@ Use "gorion list [command] --help" for more information about a command.
 | 66   | Bar           |
 | 67   | Rest room     |
 ```
-## Employees list
+### Employees list
 ```
 ~ gorion list employees
 +-----+---------------+----------+
@@ -93,7 +93,7 @@ Use "gorion list [command] --help" for more information about a command.
 | 2   | Steve Wozniak | Apple    |
 ...
 ```
-## Events
+### Events
 ```
 ~ gorion events -h
 Displays a list of events depending on entered flags
@@ -108,7 +108,7 @@ Flags:
   -h, --help              help for events
   -l, --last string       last date. (default "13.12.2017")
 ```
-## Employees worked time
+### Employees worked time
 ```
 ~ gorion hours -h
 Displays employees worked time
