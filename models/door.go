@@ -17,12 +17,12 @@ func (db *DB) Doors() ([]*Door, error) {
 
 	var doors = make([]*Door, 0)
 	for rows.Next() {
-		d := new(Door)
-		if err = rows.Scan(&d.ID, &d.Name); err != nil {
+		door := new(Door)
+		if err = rows.Scan(&door.ID, &door.Name); err != nil {
 			return nil, err
 		}
 
-		doors = append(doors, d)
+		doors = append(doors, door)
 	}
 
 	if err = rows.Err(); err != nil {
