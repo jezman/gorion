@@ -13,7 +13,7 @@ var database models.Datastore
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "Gorion",
+	Use:   "gorion",
 	Short: "Reports viewing for access control system NVP Bolid 'Orion Pro'",
 }
 
