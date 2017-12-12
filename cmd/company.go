@@ -24,7 +24,7 @@ var companyCmd = &cobra.Command{
 		table.AddHeaders("#", "Company")
 
 		for i, c := range company {
-			table.AddRow(i, c.Name)
+			table.AddRow(i+1, c.Name)
 		}
 
 		fmt.Println(table.Render())
