@@ -15,7 +15,8 @@ func Events(doorID uint, employee, firstDate, lastDate string) string {
 	doorIndex := "' AND DoorIndex = "
 	orderBy := "' ORDER BY TimeVal"
 
-	query := []string{"SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name ",
+	query := []string{
+		"SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name ",
 		"FROM pLogData l ",
 		"JOIN pList p ON (p.ID = l.HozOrgan) ",
 		"JOIN pCompany c ON (c.ID = p.Company) ",
