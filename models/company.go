@@ -17,15 +17,16 @@ func (db *DB) Company() ([]*Company, error) {
 	var company = make([]*Company, 0)
 	for rows.Next() {
 		c := new(Company)
-		err := rows.Scan(&c.Name)
-		if err != nil {
+		if err = rows.Scan(&c.Name); err != nil {
 			return nil, err
 		}
+
 		company = append(company, c)
 	}
 
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}
+
 	return company, nil
 }

@@ -21,11 +21,13 @@ func (db *DB) Doors() ([]*Door, error) {
 		if err = rows.Scan(&d.ID, &d.Name); err != nil {
 			return nil, err
 		}
+
 		doors = append(doors, d)
 	}
 
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}
+
 	return doors, nil
 }
