@@ -22,7 +22,7 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gorion",
-	Short: "Reports viewing for access control system NVP Bolid 'Orion Pro'",
+	Short: "Reports view for access control system NVP Bolid 'Orion Pro'",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -35,9 +35,9 @@ func Execute() {
 }
 
 func initDB() *models.DB {
-	config := new(models.Config)
+	dsn := os.Getenv("BOLID_DSN")
 	// init connection to the mssql
-	db, err := models.OpenDB(config.Read("config.json"))
+	db, err := models.OpenDB(dsn)
 	if err != nil {
 		log.Panic(err)
 	}
