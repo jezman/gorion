@@ -28,5 +28,5 @@ func (db *DB) Company() ([]*Company, error) {
 		return nil, err
 	}
 
-	return company, nil
+	return companies, nil
 }
