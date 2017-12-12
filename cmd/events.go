@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/apcera/termtables"
+	"github.com/jezman/gorion/query"
 	"github.com/spf13/cobra"
 )
 
@@ -11,7 +13,29 @@ var eventsCmd = &cobra.Command{
 	Use:   "events",
 	Short: "Displays a list of events depending on entered flags",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("events called")
+		db := initDB()
+		defer db.Close()
+
+		query := query.Events(door, employee, firstDate, lastDate)
+		events, err := database.Events(query)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		table := termtables.CreateTable()
+		table.AddHeaders("Time", "Employee", "Company", "Event", "Door")
+
+		for _, e := range events {
+			table.AddRow(
+				e.FirstTime.Format("15:04:05 02-01-2006"),
+				e.Employee.FullName,
+				e.Company.Name,
+				e.Door.Name,
+				e.Action,
+			)
+		}
+
+		fmt.Println(table.Render())
 	},
 }
 

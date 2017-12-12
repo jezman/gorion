@@ -1,14 +1,12 @@
 package query
 
-package query
-
 import (
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 
-	"github.com/jezman/gorion/checks"
+	"github.com/jezman/gorion/check"
 )
 
 // Events check flags and return query for events list
