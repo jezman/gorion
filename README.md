@@ -8,7 +8,9 @@ export BOLID_DSN="server=127.0.0.1;user id=username;password=passwd;database=bas
 ```
 Install Gorion:
 ```bash
-go install github.com/jezman/gorion
+go get github.com/jezman/gorion &&\
+  cd $GOPATH/src/github.com/jezman/gorion &&\
+  go install
 ```
 
 ### Features
