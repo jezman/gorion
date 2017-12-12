@@ -10,7 +10,12 @@ import (
 
 // eventsCmd represents the events command
 var eventsCmd = &cobra.Command{
-	Use:   "events",
+	Use:     "events",
+	Aliases: []string{"e"},
+	Example: `  gorion events
+  gorion events --employee=lastname --first=05.08.2017
+  gorion e -e lastname -d 32
+  gorion e -d 2 -f 12.11.2017 -l 16.11.2107`,
 	Short: "Displays a list of events depending on entered flags",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
