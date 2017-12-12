@@ -14,14 +14,14 @@ func (db *DB) Company() ([]*Company, error) {
 	}
 	defer rows.Close()
 
-	var company = make([]*Company, 0)
+	var companies = make([]*Company, 0)
 	for rows.Next() {
-		c := new(Company)
-		if err = rows.Scan(&c.Name); err != nil {
+		company := new(Company)
+		if err = rows.Scan(&company.Name); err != nil {
 			return nil, err
 		}
 
-		company = append(company, c)
+		companies = append(companies, company)
 	}
 
 	if err = rows.Err(); err != nil {
