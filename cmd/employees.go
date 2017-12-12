@@ -24,7 +24,7 @@ var employeesCmd = &cobra.Command{
 		table.AddHeaders("#", "Company", "Employee")
 
 		for i, e := range employees {
-			table.AddRow(i, e.FullName, e.Company.Name)
+			table.AddRow(i+1, e.FullName, e.Company.Name)
 		}
 
 		fmt.Println(table.Render())
