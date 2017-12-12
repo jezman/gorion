@@ -21,7 +21,7 @@ var doorsCmd = &cobra.Command{
 		}
 
 		table := termtables.CreateTable()
-		table.AddHeaders("ID", "Дверь")
+		table.AddHeaders("ID", "Door")
 
 		for _, d := range doors {
 			table.AddRow(d.ID, d.Name)
