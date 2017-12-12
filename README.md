@@ -139,7 +139,6 @@ Examples:
   gorion h -f 12.11.2017 -l 16.11.2107
 
 Flags:
-  -d, --door uint         door ID. Use: 'gorion list doors' to get a list of all doors with ID.
   -e, --employee string   employee last name. Use: 'gorion list employees' to get a list of all employees.
   -f, --first string      first date (default "12.12.2017")
   -h, --help              help for hours
