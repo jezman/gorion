@@ -11,10 +11,8 @@ type Employee struct {
 
 // Employees get all employees from database
 // return pionter to Employee struct and error
-func (db *DB) Employees() ([]*Employee, error) {
-	rows, err := db.Query(`SELECT p.Name, p.FirstName, p.MidName, c.Name FROM pList p
-		JOIN pCompany c ON (c.ID = p.Company)
-		ORDER BY c.Name`)
+func (db *DB) Employees(query string) ([]*Employee, error) {
+	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}

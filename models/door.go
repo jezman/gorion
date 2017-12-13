@@ -8,8 +8,8 @@ type Door struct {
 
 // Doors get all doors and IDs from database
 // return pionter to Door struct and error
-func (db *DB) Doors() ([]*Door, error) {
-	rows, err := db.Query("SELECT GIndex, Name FROM AcessPoint ORDER BY GIndex")
+func (db *DB) Doors(query string) ([]*Door, error) {
+	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
