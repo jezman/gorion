@@ -5,6 +5,8 @@ import (
 )
 
 func TestEmployee(t *testing.T) {
+	t.Parallel()
+
 	var tests = []struct {
 		input string
 		want  bool
@@ -22,6 +24,8 @@ func TestEmployee(t *testing.T) {
 }
 
 func TestDate(t *testing.T) {
+	t.Parallel()
+
 	var tests = []struct {
 		input string
 		want  bool

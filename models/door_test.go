@@ -7,6 +7,8 @@ import (
 )
 
 func TestDoors(t *testing.T) {
+	t.Parallel()
+
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a strub database connection", err)
