@@ -1,6 +1,6 @@
 # Gorion
 Reports view for access control system NVP Bolid "Orion Pro"
-
+### [![Build Status](https://travis-ci.org/jezman/gorion.svg?branch=master)](https://travis-ci.org/jezman/gorion)
 ## Installing
 
 Set environment variable **BOLID_DSN**:
