@@ -6,9 +6,9 @@ import (
 
 // Datastore methods
 type Datastore interface {
-	Company() ([]*Company, error)
-	Doors() ([]*Door, error)
-	Employees() ([]*Employee, error)
+	Company(string) ([]*Company, error)
+	Doors(string) ([]*Door, error)
+	Employees(string) ([]*Employee, error)
 	Events(string) ([]*Event, error)
 	WorkedTime(string) ([]*Event, error)
 }
