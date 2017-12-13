@@ -34,14 +34,14 @@ func TestEvents(t *testing.T) {
 	mock.ExpectQuery(query).WillReturnRows(rows)
 
 	if _, err = app.Events(query); err != nil {
-		t.Errorf("error was not expected while gets events ", err)
+		t.Errorf("error was not expected while gets events %q ", err)
 	}
 
 }
 
 func TestWorkedTime(t *testing.T) {
 	t.Parallel()
-	
+
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a strub database connection", err)
@@ -65,7 +65,7 @@ func TestWorkedTime(t *testing.T) {
 	mock.ExpectQuery(query).WillReturnRows(rows)
 
 	if _, err = app.WorkedTime(query); err != nil {
-		t.Errorf("error was not expected while gets worked time ", err)
+		t.Errorf("error was not expected while gets worked time %q ", err)
 	}
 
 }

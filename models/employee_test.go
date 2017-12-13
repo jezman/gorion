@@ -29,6 +29,6 @@ func TestEmployees(t *testing.T) {
 	mock.ExpectQuery(query).WillReturnRows(rows)
 
 	if _, err = app.Employees(query); err != nil {
-		t.Errorf("error was not expected while gets events ", err)
+		t.Errorf("error was not expected while gets events %q ", err)
 	}
 }

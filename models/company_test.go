@@ -24,6 +24,6 @@ func TestCompany(t *testing.T) {
 		WillReturnRows(rows)
 
 	if _, err = app.Company(query); err != nil {
-		t.Errorf("error was not expected while gets company ", err)
+		t.Errorf("error was not expected while gets company %q ", err)
 	}
 }

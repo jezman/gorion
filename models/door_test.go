@@ -24,6 +24,6 @@ func TestDoors(t *testing.T) {
 		WillReturnRows(rows)
 
 	if _, err = app.Doors(query); err != nil {
-		t.Errorf("error was not expected while gets doors ", err)
+		t.Errorf("error was not expected while gets doors %q ", err)
 	}
 }
