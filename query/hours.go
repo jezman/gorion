@@ -21,13 +21,8 @@ func WorkedTime(employee, firstDate, lastDate string) string {
 	}
 
 	// check dates
-	if err := check.Date(firstDate); err != nil {
-		fmt.Printf("'%s' %s\n", firstDate, err)
-		os.Exit(1)
-	}
-
-	if err := check.Date(lastDate); err != nil {
-		fmt.Printf("'%s' %s\n", lastDate, err)
+	if !check.Date(firstDate) || !check.Date(lastDate) {
+		fmt.Print("invalid date. corrects format: DD.MM.YYYY or DD-MM-YYYY")
 		os.Exit(1)
 	}
 
@@ -35,8 +30,10 @@ func WorkedTime(employee, firstDate, lastDate string) string {
 	if employee == "" {
 		// remove  "AND p.Name = 'employee' from query"
 		query = append(query[:9], query[12])
-	} else if err := check.Employee(employee); err != nil {
-		fmt.Printf("'%s' %s\n", employee, err)
+
+		// check employee
+	} else if !check.Employee(employee) {
+		fmt.Print("invalid employee. allowed only latters")
 		os.Exit(1)
 	}
 

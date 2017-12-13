@@ -28,13 +28,8 @@ func Events(doorID uint, employee, firstDate, lastDate string) string {
 	}
 
 	// check dates
-	if err := check.Date(firstDate); err != nil {
-		fmt.Printf("'%s' %s\n", firstDate, err)
-		os.Exit(1)
-	}
-
-	if err := check.Date(lastDate); err != nil {
-		fmt.Printf("'%s' %s\n", lastDate, err)
+	if !check.Date(firstDate) || !check.Date(lastDate) {
+		fmt.Print("invalid date. corrects format: DD.MM.YYYY or DD-MM-YYYY")
 		os.Exit(1)
 	}
 
@@ -46,10 +41,11 @@ func Events(doorID uint, employee, firstDate, lastDate string) string {
 	// change the query depending on the input flag
 	if doorID != 0 && employee != "" {
 		// check employee flag
-		if err := check.Employee(employee); err != nil {
-			fmt.Printf("'%s' %s\n", employee, err)
+		if !check.Employee(employee) {
+			fmt.Print("invalid employee. allowed only latters")
 			os.Exit(1)
 		}
+
 		add(pName, employee, doorIndex, strconv.Itoa(int(doorID)), orderBy[1:])
 	} else if employee != "" {
 		add(pName, employee, orderBy)
