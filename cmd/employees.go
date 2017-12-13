@@ -15,7 +15,11 @@ var employeesCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		employees, err := database.Employees()
+		query := `SELECT p.Name, p.FirstName, p.MidName, c.Name FROM pList p
+JOIN pCompany c ON (c.ID = p.Company)
+ORDER BY c.Name`
+
+		employees, err := database.Employees(query)
 		if err != nil {
 			fmt.Println(err)
 		}

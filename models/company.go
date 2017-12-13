@@ -7,8 +7,8 @@ type Company struct {
 
 // Company get all comanies from database
 // return pionter to Company struct and error
-func (db *DB) Company() ([]*Company, error) {
-	rows, err := db.Query("SELECT Name FROM pCompany ORDER BY Name")
+func (db *DB) Company(query string) ([]*Company, error) {
+	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
