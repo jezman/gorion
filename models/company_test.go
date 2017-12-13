@@ -15,13 +15,13 @@ func TestCompany(t *testing.T) {
 
 	app := &DB{db}
 	rows := sqlmock.NewRows([]string{"Company"}).
-		AddRow("company 1").
-		AddRow("company 2")
+		AddRow("company 1")
 
-	mock.ExpectQuery("SELECT Name FROM pCompany").
+	query := "SELECT Name FROM pCompany"
+	mock.ExpectQuery(query).
 		WillReturnRows(rows)
 
-	if _, err = app.Company(); err != nil {
+	if _, err = app.Company(query); err != nil {
 		t.Errorf("error was not expected while gets company ", err)
 	}
 }
