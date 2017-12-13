@@ -15,7 +15,8 @@ var companyCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		company, err := database.Company()
+		query := "SELECT Name FROM pCompany"
+		company, err := database.Company(query)
 		if err != nil {
 			fmt.Println(err)
 		}
