@@ -9,8 +9,9 @@ import (
 
 // doorlistCmd represents the doorlist command
 var doorsCmd = &cobra.Command{
-	Use:   "doors",
-	Short: "List all doors with ID",
+	Use:     "doors",
+	Aliases: []string{"d"},
+	Short:   "List all doors with ID",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
 		defer db.Close()

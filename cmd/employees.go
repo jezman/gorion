@@ -9,8 +9,9 @@ import (
 
 // employeesCmd represents the employees command
 var employeesCmd = &cobra.Command{
-	Use:   "employees",
-	Short: "Displays a list of employees",
+	Use:     "employees",
+	Aliases: []string{"e"},
+	Short:   "Displays a list of employees",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
 		defer db.Close()

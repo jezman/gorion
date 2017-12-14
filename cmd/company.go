@@ -9,8 +9,9 @@ import (
 
 // companyCmd represents the company command
 var companyCmd = &cobra.Command{
-	Use:   "company",
-	Short: "Displays a list of companies",
+	Use:     "company",
+	Aliases: []string{"c"},
+	Short:   "Displays a list of companies",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
 		defer db.Close()

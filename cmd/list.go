@@ -6,8 +6,9 @@ import (
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "Get list of company, doors, employees",
+	Use:     "list",
+	Aliases: []string{"l"},
+	Short:   "Get list of company, doors, employees",
 }
 
 func init() {
