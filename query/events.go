@@ -53,6 +53,5 @@ func Events(doorID uint, employee, firstDate, lastDate string) string {
 		add(doorIndex[1:], strconv.Itoa(int(doorID)), orderBy[1:])
 	}
 
-	fmt.Println(strings.Join(query, ""))
 	return strings.Join(query, "")
 }
