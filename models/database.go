@@ -13,14 +13,6 @@ type Datastore interface {
 	WorkedTime(string) ([]*Event, error)
 }
 
-// Config file structure
-type Config struct {
-	Server   string `json:"server"`
-	Database string `json:"database"`
-	User     string `json:"user"`
-	Password string `json:"password"`
-}
-
 // DB structure used as receiver in methods
 type DB struct {
 	*sql.DB
