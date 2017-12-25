@@ -11,10 +11,7 @@ import (
 
 // Events check flags and return query for events list
 func Events(doorID uint, employee, firstDate, lastDate string) string {
-	pName := " AND p.Name = '"
-	doorIndex := "' AND DoorIndex = "
-	orderBy := "' ORDER BY TimeVal"
-
+	// original query without employee and door
 	query := []string{
 		"SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name ",
 		"FROM pLogData l ",
@@ -26,6 +23,11 @@ func Events(doorID uint, employee, firstDate, lastDate string) string {
 		" AND e.Event BETWEEN 26 AND 29",
 		"ORDER BY TimeVal",
 	}
+
+	// elements that can be added to query
+	pName := "AND p.Name = '"
+	doorIndex := "' AND DoorIndex = "
+	orderBy := "' ORDER BY TimeVal"
 
 	// check dates
 	if !check.Date(firstDate) || !check.Date(lastDate) {
@@ -46,10 +48,15 @@ func Events(doorID uint, employee, firstDate, lastDate string) string {
 			os.Exit(1)
 		}
 
+		// add employee and door to query
 		add(pName, employee, doorIndex, strconv.Itoa(int(doorID)), orderBy[1:])
 	} else if employee != "" {
+
+		// add employee to query
 		add(pName, employee, orderBy)
 	} else if doorID != 0 {
+
+		// add door to query
 		add(doorIndex[1:], strconv.Itoa(int(doorID)), orderBy[1:])
 	}
 
