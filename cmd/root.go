@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"time"
 
@@ -40,7 +39,7 @@ func initDB() (db *models.DB) {
 	dsn := os.Getenv("BOLID_DSN")
 	// init connection to the mssql
 	if db, err = models.OpenDB(dsn); err != nil {
-		log.Panic(err)
+		panic(err)
 	}
 
 	// set environment
