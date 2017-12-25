@@ -22,7 +22,7 @@ var hoursCmd = &cobra.Command{
 		defer db.Close()
 
 		query := query.WorkedTime(employee, firstDate, lastDate)
-		events, err := database.WorkedTime(query)
+		events, err := env.WorkedTime(query)
 		if err != nil {
 			fmt.Println(err)
 		}

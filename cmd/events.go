@@ -22,7 +22,7 @@ var eventsCmd = &cobra.Command{
 		defer db.Close()
 
 		query := query.Events(door, employee, firstDate, lastDate)
-		events, err := database.Events(query)
+		events, err := env.Events(query)
 		if err != nil {
 			fmt.Println(err)
 		}

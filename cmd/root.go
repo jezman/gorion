@@ -12,10 +12,11 @@ import (
 
 var (
 	employee  string
+	err       error
 	door      uint
 	firstDate string
 	lastDate  string
-	database  models.Datastore
+	env       models.Datastore
 	timeNow   = time.Now().Local()
 )
 
@@ -34,16 +35,15 @@ func Execute() {
 	}
 }
 
-func initDB() *models.DB {
+func initDB() (db *models.DB) {
 	// read env var
 	dsn := os.Getenv("BOLID_DSN")
 	// init connection to the mssql
-	db, err := models.OpenDB(dsn)
-	if err != nil {
+	if db, err = models.OpenDB(dsn); err != nil {
 		log.Panic(err)
 	}
 
-	// set app connection
-	database = db
-	return db
+	// set environment
+	env = db
+	return
 }

@@ -20,7 +20,7 @@ var employeesCmd = &cobra.Command{
 JOIN pCompany c ON (c.ID = p.Company)
 ORDER BY c.Name`
 
-		employees, err := database.Employees(query)
+		employees, err := env.Employees(query)
 		if err != nil {
 			fmt.Println(err)
 		}
