@@ -12,7 +12,7 @@ export BOLID_DSN="server=127.0.0.1;user id=username;password=passwd;database=bas
 Install Gorion
 If you have [Go](https://golang.org/) installed: 
 ```bash
-go get github.com/jezman/gorion && go install $GOPATH/src/github.com/jezman/gorion
+go get github.com/jezman/gorion && go install github.com/jezman/gorion
 ```
 Otherwise, please see [Go install](https://golang.org/doc/install).
 ## Features
