@@ -15,7 +15,8 @@ var eventsCmd = &cobra.Command{
 	Example: `  gorion events
   gorion events --employee=lastname --first=05.08.2017
   gorion e -e lastname -d 32
-  gorion e -d 2 -f 12.11.2017 -l 16.11.2107`,
+  gorion e -d 2 -f 12.11.2017 -l 16.11.2107
+  gorion e -f '12.11.2017 21:00'`,
 	Short: "Displays a list of events depending on entered flags",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
