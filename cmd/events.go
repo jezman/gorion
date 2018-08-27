@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/apcera/termtables"
-	"github.com/jezman/gorion/query"
 	"github.com/spf13/cobra"
 )
 
@@ -22,8 +21,7 @@ var eventsCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		query := query.Events(door, employee, firstDate, lastDate)
-		events, err := env.Events(query)
+		events, err := env.Events(firstDate, lastDate, employee, door)
 		if err != nil {
 			fmt.Println(err)
 		}

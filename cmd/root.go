@@ -22,7 +22,17 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gorion",
-	Short: "Reports view for access control system NVP Bolid 'Orion Pro'",
+	Short: `
+ _____            _             
+|  __ \          (_)            
+| |  \/ ___  _ __ _  ___  _ __  
+| | __ / _ \| '__| |/ _ \| '_ \ 
+| |_\ \ (_) | |  | | (_) | | | |
+ \____/\___/|_|  |_|\___/|_| |_|
+
+Reports view for access control system NVP Bolid 'Orion Pro'
+
+`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

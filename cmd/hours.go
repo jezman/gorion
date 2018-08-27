@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/apcera/termtables"
-	"github.com/jezman/gorion/query"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +20,7 @@ var hoursCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		query := query.WorkedTime(employee, firstDate, lastDate)
-		events, err := env.WorkedTime(query)
+		events, err := env.WorkedTime(firstDate, lastDate, employee)
 		if err != nil {
 			fmt.Println(err)
 		}

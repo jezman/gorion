@@ -9,8 +9,8 @@ type Datastore interface {
 	Company(string) ([]*Company, error)
 	Doors(string) ([]*Door, error)
 	Employees(string) ([]*Employee, error)
-	Events(string) ([]*Event, error)
-	WorkedTime(string) ([]*Event, error)
+	Events(string, string, string, uint) ([]*Event, error)
+	WorkedTime(string, string, string) ([]*Event, error)
 }
 
 // DB structure used as receiver in methods
@@ -30,5 +30,5 @@ func OpenDB(dsn string) (*DB, error) {
 		return nil, err
 	}
 
-	return &DB{db}, nil
+	return &DB{DB: db}, nil
 }
