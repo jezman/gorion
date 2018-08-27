@@ -29,7 +29,8 @@ type Event struct {
 // return pointer to Event struct and error
 func (db *DB) Events(firstDate, lastDate, employee string, door uint) ([]*Event, error) {
 	// change the query depending on the input flag
-	if door != 0 && employee != "" {
+	switch {
+	case door != 0 && employee != "":
 		// check employee flag
 		if !check.Employee(employee) {
 			fmt.Print("invalid employee. allowed only letters")
@@ -47,9 +48,9 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint) ([]*Event,
 				AND p.Name = ?
 				AND DoorIndex = ?
 				ORDER BY TimeVal`
-
 		rows, err = db.Query(query, firstDate, lastDate, employee, door)
-	} else if employee != "" {
+
+	case employee != "":
 		if !check.Employee(employee) {
 			fmt.Print("invalid employee. allowed only letters")
 			os.Exit(1)
@@ -67,7 +68,8 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint) ([]*Event,
 				ORDER BY TimeVal`
 
 		rows, err = db.Query(query, firstDate, lastDate, employee)
-	} else if door != 0 {
+
+	case door != 0:
 		// add door to query
 		query = `SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name
 				FROM pLogData l
@@ -79,9 +81,9 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint) ([]*Event,
 				AND e.Event BETWEEN 26 AND 29
 				AND DoorIndex = ?
 				ORDER BY TimeVal`
-
 		rows, err = db.Query(query, firstDate, lastDate, door)
-	} else {
+
+	default:
 		query = `SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name
 				FROM pLogData l
 				JOIN pList p ON (p.ID = l.HozOrgan)
