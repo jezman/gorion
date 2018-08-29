@@ -16,17 +16,13 @@ var employeesCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		query := `SELECT p.Name, p.FirstName, p.MidName, c.Name FROM pList p
-JOIN pCompany c ON (c.ID = p.Company)
-ORDER BY c.Name`
-
-		employees, err := env.Employees(query)
+		employees, err := env.Employees(companyName)
 		if err != nil {
 			fmt.Println(err)
 		}
 
 		table := termtables.CreateTable()
-		table.AddHeaders("#", "Company", "Employee")
+		table.AddHeaders("#", "Employee", "Company")
 
 		for i, e := range employees {
 			table.AddRow(i+1, e.FullName, e.Company.Name)

@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var companyName string
+
 // companyCmd represents the company command
 var companyCmd = &cobra.Command{
 	Use:     "company",
@@ -16,19 +18,41 @@ var companyCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		query := "SELECT Name FROM pCompany"
-		company, err := env.Company(query)
-		if err != nil {
-			fmt.Println(err)
-		}
+		var table *termtables.Table
 
-		table := termtables.CreateTable()
-		table.AddHeaders("#", "Company")
+		if companyName != "" {
+			employees, err := env.Employees(companyName)
+			if err != nil {
+				fmt.Println(err)
+			}
 
-		for i, c := range company {
-			table.AddRow(i+1, c.Name)
+			table = termtables.CreateTable()
+			table.AddHeaders("#", "Employee", "Company")
+
+			for i, e := range employees {
+				table.AddRow(i+1, e.FullName, e.Company.Name)
+			}
+
+		} else {
+			company, err := env.Company()
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			table = termtables.CreateTable()
+			table.AddHeaders("#", "Company", "Employees")
+
+			for i, c := range company {
+				table.AddRow(i+1, c.Name, c.CountOfEmployees)
+			}
 		}
 
 		fmt.Println(table.Render())
 	},
+}
+
+func init() {
+	rootCmd.AddCommand(companyCmd)
+
+	companyCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")
 }

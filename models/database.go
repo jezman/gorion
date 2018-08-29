@@ -6,7 +6,7 @@ import (
 
 // Datastore methods
 type Datastore interface {
-	Company(string) ([]*Company, error)
+	Company() ([]*Company, error)
 	Doors(string) ([]*Door, error)
 	Employees(string) ([]*Employee, error)
 	Events(string, string, string, uint) ([]*Event, error)
