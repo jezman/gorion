@@ -26,6 +26,13 @@ Otherwise, please see [Go install](https://golang.org/doc/install).
 
 ```
 $ gorion --help
+ _____            _
+|  __ \          (_)            
+| |  \/ ___  _ __ _  ___  _ __  
+| | __ / _ \| '__| |/ _ \| '_ \ 
+| |_\ \ (_) | |  | | (_) | | | |
+ \____/\___/|_|  |_|\___/|_| |_|
+https://github.com/jezman/gorion
 Reports view for access control system NVP Bolid 'Orion Pro'
 
 Usage:
