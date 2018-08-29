@@ -29,6 +29,7 @@ var rootCmd = &cobra.Command{
 | | __ / _ \| '__| |/ _ \| '_ \ 
 | |_\ \ (_) | |  | | (_) | | | |
  \____/\___/|_|  |_|\___/|_| |_|
+https://github.com/jezman/gorion
 
 Reports view for access control system NVP Bolid 'Orion Pro'
 
