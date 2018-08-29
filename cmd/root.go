@@ -22,8 +22,7 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gorion",
-	Short: `
- _____            _             
+	Short: ` _____            _
 |  __ \          (_)            
 | |  \/ ___  _ __ _  ___  _ __  
 | | __ / _ \| '__| |/ _ \| '_ \ 
