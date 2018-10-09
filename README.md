@@ -151,3 +151,5 @@ Flags:
   -h, --help              help for hours
   -l, --last string       last date. (default "13.12.2017")
 ```
+## License
+MIT Copyright (c) 2017 jezman
