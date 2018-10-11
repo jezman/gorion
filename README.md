@@ -1,35 +1,43 @@
+# Gorion
+
 [![Build Status](https://travis-ci.org/jezman/gorion.svg?branch=master)](https://travis-ci.org/jezman/gorion)
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/jezman/gorion)](https://goreportcard.com/report/github.com/jezman/gorion)
 
-# Gorion
 Reports view for access control system NVP Bolid "Orion Pro"
+
 ## Installing
 
 Set environment variable **BOLID_DSN**:
+
 ```bash
 export BOLID_DSN="server=127.0.0.1;user id=username;password=passwd;database=base"
 ```
+
 Install Gorion
-If you have [Go](https://golang.org/) installed: 
+If you have [Go](https://golang.org/) installed:
+
 ```bash
 go get github.com/jezman/gorion && go install github.com/jezman/gorion
 ```
+
 Otherwise, please see [Go install](https://golang.org/doc/install).
+
 ## Features
 
 - [List of](#lists)
-  * [Company](#company-list)
-  * [Doors](#doors-list)
-  * [Employees](#employees-list)
+  - [Company](#company-list)
+  - [Doors](#doors-list)
+  - [Employees](#employees-list)
 - [Get events](#events)
 - [Calculate employee worked time](#employees-worked-time)
 
-```
+```bash
 $ gorion --help
  _____            _
-|  __ \          (_)            
+|  __ \          (_)
 | |  \/ ___  _ __ _  ___  _ __  
-| | __ / _ \| '__| |/ _ \| '_ \ 
+| | __ / _ \| '__| |/ _ \| '_ \
 | |_\ \ (_) | |  | | (_) | | | |
  \____/\___/|_|  |_|\___/|_| |_|
 https://github.com/jezman/gorion
@@ -50,8 +58,10 @@ Flags:
 Use "gorion [command] --help" for more information about a command.
 
 ```
+
 ## Lists
-```
+
+```bash
 $ gorion list -h
 Get list of company, doors, employees
 
@@ -68,8 +78,10 @@ Flags:
 
 Use "gorion list [command] --help" for more information about a command.
 ```
+
 ## Company list
-```
+
+```bash
 $ gorion list company
 +----+---------+
 | #  | Company |
@@ -77,12 +89,14 @@ $ gorion list company
 | 1  | Yandex  |
 | 2  | Google  |
 | 3  | Nestle  |
-... 
+...
 | 32 | Apple   |
 | 33 | Nissan  |
 ```
+
 ## Doors list
-```
+
+```bash
 $ gorion list doors
 +-----+----------------+
 | ID  | Door           |
@@ -94,8 +108,10 @@ $ gorion list doors
 | 66   | Bar           |
 | 67   | Rest room     |
 ```
+
 ## Employees list
-```
+
+```bash
 $ gorion list employees
 +-----+---------------+----------+
 | #   | Company       | Employee |
@@ -104,8 +120,10 @@ $ gorion list employees
 | 2   | Steve Wozniak | Apple    |
 ...
 ```
+
 ## Events
-```
+
+```bash
 $ gorion events -h
 Displays a list of events depending on entered flags
 
@@ -128,8 +146,10 @@ Flags:
   -h, --help              help for events
   -l, --last string       last date. (default "13.12.2017")
 ```
+
 ## Employees worked time
-```
+
+```bash
 $ gorion hours -h
 Displays employees worked time
 
@@ -151,5 +171,7 @@ Flags:
   -h, --help              help for hours
   -l, --last string       last date. (default "13.12.2017")
 ```
+
 ## License
+
 MIT © 2018 jezman
