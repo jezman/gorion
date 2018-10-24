@@ -110,8 +110,8 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint) ([]*Event,
 			&event.Employee.MidName,
 			&event.Company.Name,
 			&event.FirstTime,
-			&event.Door.Name,
 			&event.Action,
+			&event.Door.Name,
 		)
 
 		if err != nil {

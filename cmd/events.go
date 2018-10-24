@@ -27,7 +27,7 @@ var eventsCmd = &cobra.Command{
 		}
 
 		table := termtables.CreateTable()
-		table.AddHeaders("Time", "Employee", "Company", "Event", "Door")
+		table.AddHeaders("Time", "Employee", "Company", "Door", "Event")
 
 		for _, e := range events {
 			table.AddRow(
@@ -35,7 +35,7 @@ var eventsCmd = &cobra.Command{
 				e.Employee.FullName,
 				e.Company.Name,
 				e.Door.Name,
-				e.Action,
+				colorize(e.Action),
 			)
 		}
 
