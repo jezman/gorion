@@ -16,8 +16,7 @@ var doorsCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		query := "SELECT GIndex, Name FROM AcessPoint ORDER BY GIndex"
-		doors, err := env.Doors(query)
+		doors, err := env.Doors()
 		if err != nil {
 			fmt.Println(err)
 		}
