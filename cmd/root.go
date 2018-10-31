@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/apcera/termtables"
 	"github.com/jezman/gorion/models"
 	"github.com/spf13/cobra"
 )
@@ -18,6 +19,7 @@ var (
 	lastDate  string
 	env       models.Datastore
 	timeNow   = time.Now().Local()
+	table     *termtables.Table
 )
 
 // rootCmd represents the base command when called without any subcommands

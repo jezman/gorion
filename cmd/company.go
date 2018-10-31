@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/apcera/termtables"
+	"github.com/jezman/gorion/render"
 	"github.com/spf13/cobra"
 )
 
@@ -18,33 +18,20 @@ var companyCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		var table *termtables.Table
-
 		if companyName != "" {
 			employees, err := env.Employees(companyName)
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			table = termtables.CreateTable()
-			table.AddHeaders("#", "Employee", "Company")
-
-			for i, e := range employees {
-				table.AddRow(i+1, e.FullName, e.Company.Name)
-			}
-
+			table = render.Preparing(employees, "#", "Employee", "Company")
 		} else {
-			company, err := env.Company()
+			companies, err := env.Company()
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			table = termtables.CreateTable()
-			table.AddHeaders("#", "Company", "Employees")
-
-			for i, c := range company {
-				table.AddRow(i+1, c.Name, c.CountOfEmployees)
-			}
+			table = render.Preparing(companies, "#", "Company", "Employees")
 		}
 
 		fmt.Println(table.Render())

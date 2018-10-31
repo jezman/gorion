@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/apcera/termtables"
+	"github.com/jezman/gorion/render"
 	"github.com/spf13/cobra"
 )
 
@@ -25,18 +25,7 @@ var hoursCmd = &cobra.Command{
 			fmt.Println(err)
 		}
 
-		table := termtables.CreateTable()
-		table.AddHeaders("Employee", "Company", "First event", "Last event", "Worked time")
-
-		for _, e := range events {
-			table.AddRow(
-				e.Employee.FullName,
-				e.Employee.Company.Name,
-				e.FirstTime.Format("02-01-2006 15:04:05"),
-				e.LastTime.Format("02-01-2006 15:04:05"),
-				e.WorkedTime,
-			)
-		}
+		table = render.Preparing(events, "Employee", "Company", "First event", "Last event", "Worked time")
 		fmt.Println(table.Render())
 	},
 }

@@ -3,8 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/apcera/termtables"
-	"github.com/jezman/gorion/helpers"
+	"github.com/jezman/gorion/render"
 	"github.com/spf13/cobra"
 )
 
@@ -31,35 +30,18 @@ var eventsCmd = &cobra.Command{
 				fmt.Println(err)
 			}
 
-			table := termtables.CreateTable()
-			table.AddHeaders("ID", "Value", "Description")
+			table = render.Preparing(values, "ID", "Value", "Description")
 
-			for _, v := range values {
-				table.AddRow(v.ID, v.Action, v.Description)
-			}
-
-			fmt.Println(table.Render())
 		} else {
 			events, err := env.Events(firstDate, lastDate, employee, door, denied)
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			table := termtables.CreateTable()
-			table.AddHeaders("Time", "Employee", "Company", "Door", "Event")
-
-			for _, e := range events {
-				table.AddRow(
-					e.FirstTime.Format("15:04:05 02-01-2006"),
-					e.Employee.FullName,
-					e.Company.Name,
-					e.Door.Name,
-					helpers.ColorizedDenied(e.Action),
-				)
-			}
-
-			fmt.Println(table.Render())
+			table = render.Preparing(events, "Time", "Employee", "Company", "Door", "Event")
 		}
+
+		fmt.Println(table.Render())
 	},
 }
 

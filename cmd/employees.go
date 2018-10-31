@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/apcera/termtables"
+	"github.com/jezman/gorion/render"
 	"github.com/spf13/cobra"
 )
 
@@ -21,13 +21,7 @@ var employeesCmd = &cobra.Command{
 			fmt.Println(err)
 		}
 
-		table := termtables.CreateTable()
-		table.AddHeaders("#", "Employee", "Company")
-
-		for i, e := range employees {
-			table.AddRow(i+1, e.FullName, e.Company.Name)
-		}
-
+		table = render.Preparing(employees, "#", "Employee", "Company")
 		fmt.Println(table.Render())
 	},
 }
