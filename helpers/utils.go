@@ -8,7 +8,7 @@ import (
 
 // ColorizedDenied events
 func ColorizedDenied(event string) string {
-	if strings.Contains(event, "отклонен") {
+	if strings.Contains(event, "отклонен") || strings.Contains(event, "Запрет") {
 		return color.Red(event)
 	}
 

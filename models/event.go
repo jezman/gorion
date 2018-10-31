@@ -45,6 +45,8 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 		rows, err = db.Query(helpers.QueryEventsByEmployee, firstDate, lastDate, employee)
 	case door != 0:
 		rows, err = db.Query(helpers.QueryEventsByDoor, firstDate, lastDate, door)
+	case denied:
+		rows, err = db.Query(helpers.QueryEventsDenied, firstDate, lastDate)
 	default:
 		rows, err = db.Query(helpers.QueryEvents, firstDate, lastDate)
 	}

@@ -41,6 +41,15 @@ const (
 		AND e.Event BETWEEN 26 AND 29
 		AND DoorIndex = ?
 		ORDER BY TimeVal`
+	QueryEventsDenied = `SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name
+		FROM pLogData l
+		JOIN pList p ON (p.ID = l.HozOrgan)
+		JOIN pCompany c ON (c.ID = p.Company)
+		JOIN Events e ON (e.Event = l.Event)
+		JOIN AcessPoint a ON (a.GIndex = l.DoorIndex)
+		WHERE TimeVal BETWEEN ? AND ?
+		AND e.Event IN(26,29)
+		ORDER BY TimeVal`
 	QueryWorkedTimeByEmployee = `SELECT p.Name, p.FirstName, p.MidName, c.Name, min(TimeVal), max(TimeVal)
 		FROM pLogData l
 		JOIN pList p ON (p.ID = l.HozOrgan)
