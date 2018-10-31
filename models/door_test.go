@@ -19,11 +19,10 @@ func TestDoors(t *testing.T) {
 	rows := sqlmock.NewRows([]string{"GIndxex", "Name"}).
 		AddRow(1, "door 1")
 
-	query := "SELECT GIndex, Name FROM AcessPoint"
 	mock.ExpectQuery(query).
 		WillReturnRows(rows)
 
-	if _, err = app.Doors(query); err != nil {
+	if _, err = app.Doors(); err != nil {
 		t.Errorf("error was not expected while gets doors %q ", err)
 	}
 }

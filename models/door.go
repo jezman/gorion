@@ -1,5 +1,9 @@
 package models
 
+import (
+	"github.com/jezman/gorion/helpers"
+)
+
 // Door model
 type Door struct {
 	ID   int
@@ -9,8 +13,7 @@ type Door struct {
 // Doors get all doors and IDs from database
 // return pionter to Door struct and error
 func (db *DB) Doors() ([]*Door, error) {
-	query := "SELECT GIndex, Name FROM AcessPoint ORDER BY GIndex"
-	rows, err := db.Query(query)
+	rows, err := db.Query(helpers.QueryDoors)
 	if err != nil {
 		return nil, err
 	}

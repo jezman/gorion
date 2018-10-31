@@ -9,7 +9,7 @@ type Datastore interface {
 	Company() ([]*Company, error)
 	Doors() ([]*Door, error)
 	Employees(string) ([]*Employee, error)
-	Events(string, string, string, uint) ([]*Event, error)
+	Events(string, string, string, uint, bool) ([]*Event, error)
 	WorkedTime(string, string, string) ([]*Event, error)
 }
 

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/jezman/gorion/helpers"
 	"database/sql"
 )
 
@@ -19,21 +20,12 @@ func (db *DB) Employees(companyName string) ([]*Employee, error) {
 	var (
 		rows  *sql.Rows
 		err   error
-		query string
 	)
 
 	if companyName != "" {
-		query = `SELECT plist.Name, pList.FirstName, pList.MidName, c.Name from pList
-						JOIN pCompany c ON (c.ID = Company)
-						WHERE c.Name = ?
-						ORDER BY pList.Name`
-		rows, err = db.Query(query, companyName)
-
+		rows, err = db.Query(helpers.QueryEmployeesByCompany, companyName)
 	} else {
-		query = `SELECT p.Name, p.FirstName, p.MidName, c.Name FROM pList p
-					JOIN pCompany c ON (c.ID = p.Company)
-					ORDER BY c.Name`
-		rows, err = db.Query(query)
+		rows, err = db.Query(helpers.QueryEmployees)
 	}
 	if err != nil {
 		return nil, err

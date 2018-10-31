@@ -1,12 +1,12 @@
-package check
+package helpers
 
 import (
 	"regexp"
 )
 
-// Employee check employee flag
+// Employee validation employee flag
 // return false if value don't match regexp
-func Employee(value string) bool {
+func ValidationEmployee(value string) bool {
 	if match, _ := regexp.MatchString(
 		`^[а-яА-Яa-zA-z][а-яa-z-А-ЯA-Z-_\.]{0,20}$`, value,
 	); !match {
@@ -15,10 +15,10 @@ func Employee(value string) bool {
 	return true
 }
 
-// Date check date flags
+// Date validation date flags
 // return false if date don't match
 // regexp DD.MM.YYYY or DD-MM-YYYY
-func Date(date string) bool {
+func ValidationDate(date string) bool {
 	if match, _ := regexp.MatchString(
 		`(0[1-9]|[12][0-9]|3[01])[- ..](0[1-9]|1[012])[- ..][201]\d\d\d`, date,
 	); !match {

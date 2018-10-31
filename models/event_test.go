@@ -16,7 +16,7 @@ func TestEvents(t *testing.T) {
 	}
 	defer db.Close()
 
-	app := &DB{db}
+	app := &DB{DB: db}
 
 	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Event", "Door"}
 	rows := sqlmock.NewRows(column).
@@ -29,11 +29,14 @@ func TestEvents(t *testing.T) {
 			"action",
 			"door",
 		)
-	query := "select TimeVal, HozOrgan, Remark, DoorIndex, NumCom, Event, indexKey from pLogData"
 
-	mock.ExpectQuery(query).WillReturnRows(rows)
+	query = "SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name FROM pLogData l JOIN pList p ON (p.ID = l.HozOrgan) JOIN pCompany c ON (c.ID = p.Company) JOIN Events e ON (e.Event = l.Event) JOIN AcessPoint a ON (a.GIndex = l.DoorIndex) WHERE TimeVal BETWEEN \\? AND \\? AND e.Event BETWEEN 26 AND 29 ORDER BY TimeVal"
 
-	if _, err = app.Events(query); err != nil {
+	mock.ExpectQuery(query).
+		WithArgs("22.08.2018", "23.08.2018").
+		WillReturnRows(rows)
+
+	if _, err = app.Events("22.02.2018", "23.03.2018", "", 0); err != nil {
 		t.Errorf("error was not expected while gets events %q ", err)
 	}
 
@@ -48,7 +51,7 @@ func TestWorkedTime(t *testing.T) {
 	}
 	defer db.Close()
 
-	app := &DB{db}
+	app := &DB{DB: db}
 
 	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Event"}
 	rows := sqlmock.NewRows(column).
@@ -60,11 +63,11 @@ func TestWorkedTime(t *testing.T) {
 			time.Now(),
 			time.Now(),
 		)
-	query := "select TimeVal, HozOrgan, Remark, DoorIndex, NumCom, Event from pLogData"
+	query := "SELECT p.Name, p.FirstName, p.MidName, c.Name, min(TimeVal), max(TimeVal) FROM pLogData l JOIN pList p ON (p.ID = l.HozOrgan) JOIN pCompany c ON (c.ID = p.Company) WHERE TimeVal BETWEEN ? AND ? GROUP BY p.Name, p.FirstName, p.MidName, c.Name, CONVERT(varchar(20), TimeVal, 104)"
 
 	mock.ExpectQuery(query).WillReturnRows(rows)
 
-	if _, err = app.WorkedTime(query); err != nil {
+	if _, err = app.WorkedTime("22.02.2018", "23.03.2018", ""); err != nil {
 		t.Errorf("error was not expected while gets worked time %q ", err)
 	}
 

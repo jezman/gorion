@@ -3,10 +3,8 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
-	"github.com/bclicn/color"
 	"github.com/jezman/gorion/models"
 	"github.com/spf13/cobra"
 )
@@ -14,6 +12,7 @@ import (
 var (
 	employee  string
 	err       error
+	denied    bool
 	door      uint
 	firstDate string
 	lastDate  string
@@ -57,12 +56,4 @@ func initDB() (db *models.DB) {
 	// set environment
 	env = db
 	return
-}
-
-func colorize(event string) string {
-	if strings.Contains(event, "отклонен") {
-		return color.Red(event)
-	}
-
-	return event
 }

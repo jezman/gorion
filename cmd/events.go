@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/apcera/termtables"
+	"github.com/jezman/gorion/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +22,7 @@ var eventsCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		events, err := env.Events(firstDate, lastDate, employee, door)
+		events, err := env.Events(firstDate, lastDate, employee, door, denied)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -35,7 +36,7 @@ var eventsCmd = &cobra.Command{
 				e.Employee.FullName,
 				e.Company.Name,
 				e.Door.Name,
-				colorize(e.Action),
+				helpers.ColorizedDenied(e.Action),
 			)
 		}
 

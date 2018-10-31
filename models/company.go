@@ -1,5 +1,9 @@
 package models
 
+import (
+	"github.com/jezman/gorion/helpers"
+)
+
 // Company model
 type Company struct {
 	Name string
@@ -9,10 +13,7 @@ type Company struct {
 // Company get all comanies from database
 // return pionter to Company struct and error
 func (db *DB) Company() ([]*Company, error) {
-	query := `SELECT c.Name, Count(pList.Name) FROM pList
-				JOIN pCompany c ON (c.ID = Company)
-				GROUP BY c.Name`
-	rows, err := db.Query(query)
+	rows, err := db.Query(helpers.QueryCompanies)
 	if err != nil {
 		return nil, err
 	}
