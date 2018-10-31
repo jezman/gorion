@@ -39,7 +39,5 @@ var companyCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(companyCmd)
-
 	companyCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")
 }

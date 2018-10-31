@@ -48,9 +48,7 @@ func Execute() {
 }
 
 func initDB() (db *models.DB) {
-	// read env var
 	dsn := os.Getenv("BOLID_DSN")
-	// init connection to the mssql
 	if db, err = models.OpenDB(dsn); err != nil {
 		panic(err)
 	}
