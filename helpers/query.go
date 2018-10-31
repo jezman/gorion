@@ -48,7 +48,7 @@ const (
 		JOIN Events e ON (e.Event = l.Event)
 		JOIN AcessPoint a ON (a.GIndex = l.DoorIndex)
 		WHERE TimeVal BETWEEN ? AND ?
-		AND e.Event IN(26,29)
+		AND e.Event IN (26, 29)
 		ORDER BY TimeVal`
 	QueryWorkedTimeByEmployee = `SELECT p.Name, p.FirstName, p.MidName, c.Name, min(TimeVal), max(TimeVal)
 		FROM pLogData l

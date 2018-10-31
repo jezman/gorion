@@ -5,11 +5,20 @@ import (
 	"time"
 
 	sqlmock "github.com/DATA-DOG/go-sqlmock"
+	"github.com/jezman/gorion/helpers"
+)
+
+var (
+	timeNow = time.Now().Local()
+	firstDate = timeNow.Format("02.01.2006")
+	lastDate = timeNow.AddDate(0, 0, 1).Format("02.01.2006")
+	employee = "Employee"
+	company = "Company"
+	door = uint(22)
+	denied = true
 )
 
 func TestEvents(t *testing.T) {
-	t.Parallel()
-
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a strub database connection", err)
@@ -18,28 +27,50 @@ func TestEvents(t *testing.T) {
 
 	app := &DB{DB: db}
 
-	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Event", "Door"}
+
+	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Door", "Event"}
 	rows := sqlmock.NewRows(column).
-		AddRow(
-			"firstName",
-			"midName",
-			"lastName",
-			"company",
-			time.Now(),
-			"action",
-			"door",
-		)
+		AddRow("firstName", "midName", "lastName", "company", time.Now(), "door", "action")
 
-	query = "SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name FROM pLogData l JOIN pList p ON (p.ID = l.HozOrgan) JOIN pCompany c ON (c.ID = p.Company) JOIN Events e ON (e.Event = l.Event) JOIN AcessPoint a ON (a.GIndex = l.DoorIndex) WHERE TimeVal BETWEEN \\? AND \\? AND e.Event BETWEEN 26 AND 29 ORDER BY TimeVal"
-
-	mock.ExpectQuery(query).
-		WithArgs("22.08.2018", "23.08.2018").
+	mock.ExpectQuery(helpers.TestQueryEvents).
+		WithArgs(firstDate, lastDate).
 		WillReturnRows(rows)
 
-	if _, err = app.Events("22.02.2018", "23.03.2018", "", 0); err != nil {
-		t.Errorf("error was not expected while gets events %q ", err)
+	if _, err := app.Events(firstDate, lastDate, "", 0, false); err != nil {
+		t.Errorf("error was not expected while gets all events %q ", err)
 	}
 
+	mock.ExpectQuery(helpers.TestQueryEventsByEmployeeAndDoor).
+		WithArgs(firstDate, lastDate, employee, door).
+		WillReturnRows(rows)
+
+	if _, err = app.Events(firstDate, lastDate, employee, door, false); err != nil {
+		t.Errorf("error was not expected while gets events by employee and door %q ", err)
+	}
+
+	mock.ExpectQuery(helpers.TestQueryEventsByEmployee).
+		WithArgs(firstDate, lastDate, employee).
+		WillReturnRows(rows)
+
+	if _, err = app.Events(firstDate, lastDate, employee, 0, false); err != nil {
+		t.Errorf("error was not expected while gets events by employee %q ", err)
+	}
+
+	mock.ExpectQuery(helpers.TestQueryEventsByDoor).
+		WithArgs(firstDate, lastDate, door).
+		WillReturnRows(rows)
+
+	if _, err = app.Events(firstDate, lastDate, "", door, false); err != nil {
+		t.Errorf("error was not expected while gets events by door %q ", err)
+	}
+
+	mock.ExpectQuery(helpers.TestQueryEventsDenied).
+		WithArgs(firstDate, lastDate).
+		WillReturnRows(rows)
+
+	if _, err = app.Events(firstDate, lastDate, "", 0, denied); err != nil {
+		t.Errorf("error was not expected while gets denied events %q ", err)
+	}
 }
 
 func TestWorkedTime(t *testing.T) {
@@ -55,20 +86,23 @@ func TestWorkedTime(t *testing.T) {
 
 	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Event"}
 	rows := sqlmock.NewRows(column).
-		AddRow(
-			"firstName",
-			"midName",
-			"lastName",
-			"company",
-			time.Now(),
-			time.Now(),
-		)
-	query := "SELECT p.Name, p.FirstName, p.MidName, c.Name, min(TimeVal), max(TimeVal) FROM pLogData l JOIN pList p ON (p.ID = l.HozOrgan) JOIN pCompany c ON (c.ID = p.Company) WHERE TimeVal BETWEEN ? AND ? GROUP BY p.Name, p.FirstName, p.MidName, c.Name, CONVERT(varchar(20), TimeVal, 104)"
+		AddRow("firstName",	"midName", "lastName", "company", timeNow, timeNow)
 
-	mock.ExpectQuery(query).WillReturnRows(rows)
+	mock.ExpectQuery(helpers.TestQueryWorkedTime).WillReturnRows(rows)
 
-	if _, err = app.WorkedTime("22.02.2018", "23.03.2018", ""); err != nil {
+	if _, err = app.WorkedTime(firstDate, lastDate, "", ""); err != nil {
 		t.Errorf("error was not expected while gets worked time %q ", err)
 	}
 
+	mock.ExpectQuery(helpers.TestQueryWorkedTimeByCompany).WillReturnRows(rows)
+
+	if _, err = app.WorkedTime(firstDate, lastDate, "", company); err != nil {
+		t.Errorf("error was not expected while gets worked time %q ", err)
+	}
+
+	mock.ExpectQuery(helpers.TestQueryWorkedTimeByEmployee).WillReturnRows(rows)
+
+	if _, err = app.WorkedTime(firstDate, lastDate, employee, ""); err != nil {
+		t.Errorf("error was not expected while gets worked time %q ", err)
+	}
 }
