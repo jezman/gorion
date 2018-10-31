@@ -73,7 +73,7 @@ const (
 	QueryEmployees = `SELECT p.Name, p.FirstName, p.MidName, c.Name FROM pList p
 		JOIN pCompany c ON (c.ID = p.Company)
 		ORDER BY c.Name`
-	QueryEmployeesByCompany = `SELECT plist.Name, pList.FirstName, pList.MidName, c.Name from pList
+	QueryEmployeesByCompany = `SELECT plist.Name, pList.FirstName, pList.MidName, c.Name FROM pList
 		JOIN pCompany c ON (c.ID = Company)
 		WHERE c.Name = ?
 		ORDER BY pList.Name`

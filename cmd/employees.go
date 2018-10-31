@@ -31,3 +31,9 @@ var employeesCmd = &cobra.Command{
 		fmt.Println(table.Render())
 	},
 }
+
+func init() {
+	rootCmd.AddCommand(companyCmd)
+
+	employeesCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")
+}
