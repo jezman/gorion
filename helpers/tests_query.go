@@ -81,4 +81,5 @@ const (
 		WHERE TimeVal BETWEEN (.+) AND (.+)
 		AND (.+) = (.+)
 		GROUP BY (.+), (.+), (.+), (.+), (.+)$`
+	TestQueryEventsValues = "SELECT (.+), (.+), (.+) from Events"
 )

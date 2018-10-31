@@ -81,4 +81,5 @@ const (
 		JOIN pCompany c ON (c.ID = Company)
 		GROUP BY c.Name`
 	QueryDoors = "SELECT GIndex, Name FROM AcessPoint ORDER BY GIndex"
+	QueryEventsValues = "SELECT Event, Contents, Comment from Events"
 )

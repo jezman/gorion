@@ -9,13 +9,13 @@ import (
 )
 
 var (
-	timeNow = time.Now().Local()
+	timeNow   = time.Now().Local()
 	firstDate = timeNow.Format("02.01.2006")
-	lastDate = timeNow.AddDate(0, 0, 1).Format("02.01.2006")
-	employee = "Employee"
-	company = "Company"
-	door = uint(22)
-	denied = true
+	lastDate  = timeNow.AddDate(0, 0, 1).Format("02.01.2006")
+	employee  = "Employee"
+	company   = "Company"
+	door      = uint(22)
+	denied    = true
 )
 
 func TestEvents(t *testing.T) {
@@ -26,7 +26,6 @@ func TestEvents(t *testing.T) {
 	defer db.Close()
 
 	app := &DB{DB: db}
-
 
 	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Door", "Event"}
 	rows := sqlmock.NewRows(column).
@@ -74,8 +73,6 @@ func TestEvents(t *testing.T) {
 }
 
 func TestWorkedTime(t *testing.T) {
-	t.Parallel()
-
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a strub database connection", err)
@@ -86,7 +83,7 @@ func TestWorkedTime(t *testing.T) {
 
 	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Event"}
 	rows := sqlmock.NewRows(column).
-		AddRow("firstName",	"midName", "lastName", "company", timeNow, timeNow)
+		AddRow("firstName", "midName", "lastName", "company", timeNow, timeNow)
 
 	mock.ExpectQuery(helpers.TestQueryWorkedTime).WillReturnRows(rows)
 
@@ -104,5 +101,25 @@ func TestWorkedTime(t *testing.T) {
 
 	if _, err = app.WorkedTime(firstDate, lastDate, employee, ""); err != nil {
 		t.Errorf("error was not expected while gets worked time %q ", err)
+	}
+}
+
+func TestEventsValue(t *testing.T) {
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a strub database connection", err)
+	}
+	defer db.Close()
+
+	app := &DB{DB: db}
+
+	column := []string{"ID", "Value", "Comment"}
+	rows := sqlmock.NewRows(column).
+		AddRow("1", "alert", "alert event")
+
+	mock.ExpectQuery(helpers.TestQueryEventsValues).WillReturnRows(rows)
+
+	if _, err := app.EventsValues(); err != nil {
+		t.Errorf("error was not expected while gets events values %q ", err)
 	}
 }

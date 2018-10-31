@@ -17,14 +17,15 @@ var (
 
 // Event model
 type Event struct {
-	Employee   Employee
-	FirstTime  time.Time
-	LastTime   time.Time
-	Company    Company
-	Door       Door
-	Action     string
-	// TODO: events value
-	WorkedTime time.Duration
+	Employee    Employee
+	FirstTime   time.Time
+	LastTime    time.Time
+	Company     Company
+	Door        Door
+	Action      string
+	Description string
+	ID          string
+	WorkedTime  time.Duration
 }
 
 // Events gets the list of events for the time period
@@ -143,4 +144,29 @@ func (db *DB) WorkedTime(firstDate, lastDate, employee, company string) ([]*Even
 		return nil, err
 	}
 	return events, nil
+}
+
+// EventsValues return pointer to Event struct and error
+func (db *DB) EventsValues() ([]*Event, error) {
+	rows, err := db.Query(helpers.QueryEventsValues)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var eventValues = make([]*Event, 0)
+	for rows.Next() {
+		ev := new(Event)
+		if err = rows.Scan(&ev.ID, &ev.Action, &ev.Description); err != nil {
+			return nil, err
+		}
+
+		eventValues = append(eventValues, ev)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return eventValues, nil
 }
