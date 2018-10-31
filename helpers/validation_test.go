@@ -5,8 +5,6 @@ import (
 )
 
 func TestEmployee(t *testing.T) {
-	t.Parallel()
-
 	var tests = []struct {
 		input string
 		want  bool
@@ -17,15 +15,13 @@ func TestEmployee(t *testing.T) {
 		{"123456", false},
 	}
 	for _, test := range tests {
-		if got := Employee(test.input); got != test.want {
+		if got := ValidationEmployee(test.input); got != test.want {
 			t.Errorf("Employee(%q) is %v. Need %v", test.input, test.want, got)
 		}
 	}
 }
 
 func TestDate(t *testing.T) {
-	t.Parallel()
-
 	var tests = []struct {
 		input string
 		want  bool
@@ -37,7 +33,7 @@ func TestDate(t *testing.T) {
 		{"123456", false},
 	}
 	for _, test := range tests {
-		if got := Date(test.input); got != test.want {
+		if got := ValidationDate(test.input); got != test.want {
 			t.Errorf("Employee(%q) is %v. Need %v", test.input, test.want, got)
 		}
 	}

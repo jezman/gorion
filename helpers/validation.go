@@ -4,7 +4,7 @@ import (
 	"regexp"
 )
 
-// Employee validation employee flag
+// ValidationEmployee validation employee flag
 // return false if value don't match regexp
 func ValidationEmployee(value string) bool {
 	if match, _ := regexp.MatchString(
@@ -15,7 +15,7 @@ func ValidationEmployee(value string) bool {
 	return true
 }
 
-// Date validation date flags
+// ValidationDate validation date flags
 // return false if date don't match
 // regexp DD.MM.YYYY or DD-MM-YYYY
 func ValidationDate(date string) bool {
