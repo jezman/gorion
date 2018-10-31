@@ -23,6 +23,7 @@ type Event struct {
 	Company    Company
 	Door       Door
 	Action     string
+	// TODO: events value
 	WorkedTime time.Duration
 }
 
@@ -36,7 +37,7 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 			fmt.Print("invalid employee. allowed only letters")
 			os.Exit(1)
 		}
-		rows, err = db.Query(helpers.QueryEventsBeEmployeeAndDoor, firstDate, lastDate, employee, door)
+		rows, err = db.Query(helpers.QueryEventsByEmployeeAndDoor, firstDate, lastDate, employee, door)
 	case employee != "":
 		if !helpers.ValidationEmployee(employee) {
 			fmt.Print("invalid employee. allowed only letters")

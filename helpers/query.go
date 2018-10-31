@@ -10,7 +10,7 @@ const (
 		WHERE TimeVal BETWEEN ? AND ?
 		AND e.Event BETWEEN 26 AND 29
 		ORDER BY TimeVal`
-	QueryEventsBeEmployeeAndDoor = `SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name
+	QueryEventsByEmployeeAndDoor = `SELECT p.Name, p.FirstName, p.MidName, c.Name, TimeVal, e.Contents, a.Name
 		FROM pLogData l
 		JOIN pList p ON (p.ID = l.HozOrgan)
 		JOIN pCompany c ON (c.ID = p.Company)
