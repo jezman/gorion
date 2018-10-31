@@ -88,7 +88,7 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 // WorkedTime gets the list of employees and
 // calculates their worked time
 // return pointer to Event struct and error
-func (db *DB) WorkedTime(firstDate, lastDate, employee string) ([]*Event, error) {
+func (db *DB) WorkedTime(firstDate, lastDate, employee, company string) ([]*Event, error) {
 	if !helpers.ValidationDate(firstDate) || !helpers.ValidationDate(lastDate) {
 		fmt.Print("invalid date. corrects format: DD.MM.YYYY or DD-MM-YYYY")
 		os.Exit(1)
@@ -101,6 +101,8 @@ func (db *DB) WorkedTime(firstDate, lastDate, employee string) ([]*Event, error)
 			os.Exit(1)
 		}
 		rows, err = db.Query(helpers.QueryWorkedTimeByEmployee, firstDate, lastDate, employee)
+	case company != "":
+		rows, err = db.Query(helpers.QueryWorkedTimeByCompany, firstDate, lastDate, company)
 	default:
 		rows, err = db.Query(helpers.QueryWorkedTime, firstDate, lastDate)
 	}

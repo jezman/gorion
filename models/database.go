@@ -10,7 +10,7 @@ type Datastore interface {
 	Doors() ([]*Door, error)
 	Employees(string) ([]*Employee, error)
 	Events(string, string, string, uint, bool) ([]*Event, error)
-	WorkedTime(string, string, string) ([]*Event, error)
+	WorkedTime(string, string, string, string) ([]*Event, error)
 }
 
 // DB structure used as receiver in methods

@@ -20,7 +20,7 @@ var hoursCmd = &cobra.Command{
 		db := initDB()
 		defer db.Close()
 
-		events, err := env.WorkedTime(firstDate, lastDate, employee)
+		events, err := env.WorkedTime(firstDate, lastDate, employee, companyName)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -47,4 +47,5 @@ func init() {
 	hoursCmd.Flags().StringVarP(&employee, "employee", "e", "", "employee last name. Use: 'gorion list employees' to get a list of all employees.")
 	hoursCmd.Flags().StringVarP(&firstDate, "first", "f", timeNow.Format("02.01.2006"), "first date")
 	hoursCmd.Flags().StringVarP(&lastDate, "last", "l", timeNow.AddDate(0, 0, 1).Format("02.01.2006"), "last date.")
+	hoursCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")
 }

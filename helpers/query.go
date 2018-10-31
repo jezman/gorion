@@ -48,6 +48,13 @@ const (
 		WHERE TimeVal BETWEEN ? AND ?
 		AND p.Name = ?
 		GROUP BY p.Name, p.FirstName, p.MidName, c.Name, CONVERT(varchar(20), TimeVal, 104)`
+	QueryWorkedTimeByCompany = `SELECT p.Name, p.FirstName, p.MidName, c.Name, min(TimeVal), max(TimeVal)
+		FROM pLogData l
+		JOIN pList p ON (p.ID = l.HozOrgan)
+		JOIN pCompany c ON (c.ID = p.Company)
+		WHERE TimeVal BETWEEN ? AND ?
+		AND c.Name = ?
+		GROUP BY p.Name, p.FirstName, p.MidName, c.Name, CONVERT(varchar(20), TimeVal, 104)`
 	QueryWorkedTime = `SELECT p.Name, p.FirstName, p.MidName, c.Name, min(TimeVal), max(TimeVal)
 		FROM pLogData l
 		JOIN pList p ON (p.ID = l.HozOrgan)
