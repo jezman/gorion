@@ -1,6 +1,7 @@
 package models
 
 import (
+	"time"
 	"database/sql"
 )
 
@@ -11,6 +12,7 @@ type Datastore interface {
 	Employees(string) ([]*Employee, error)
 	Events(string, string, string, uint, bool) ([]*Event, error)
 	EventsValues() ([]*Event, error)
+	EventsTail(time.Duration) error
 	WorkedTime(string, string, string, string) ([]*Event, error)
 }
 

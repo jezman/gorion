@@ -65,7 +65,7 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 			&event.Employee.LastName,
 			&event.Employee.FirstName,
 			&event.Employee.MidName,
-			&event.Company.Name,
+			&event.Employee.Company.Name,
 			&event.FirstTime,
 			&event.Action,
 			&event.Door.Name,
@@ -169,4 +169,49 @@ func (db *DB) EventsValues() ([]*Event, error) {
 	}
 
 	return eventValues, nil
+}
+
+func (db *DB) EventsTail(interval time.Duration) error {
+	timeNow := time.Now().Local()
+	backForSeconds := timeNow.Add(time.Second * -interval)
+
+	rows, err := db.Query(
+		helpers.QueryEvents,
+		backForSeconds.Format("02.01.2006 15:04:05"),
+		timeNow.Format("02.01.2006 15:04:05"),
+	)
+	if err != nil {
+		return err
+	}
+
+	for rows.Next() {
+		event := new(Event)
+		err := rows.Scan(
+			&event.Employee.LastName,
+			&event.Employee.FirstName,
+			&event.Employee.MidName,
+			&event.Employee.Company.Name,
+			&event.FirstTime,
+			&event.Action,
+			&event.Door.Name,
+		)
+
+		if err != nil {
+			return err
+		}
+
+		event.Employee.FullName = event.Employee.LastName + " " +
+			event.Employee.FirstName + " " + event.Employee.MidName
+
+		fmt.Println(
+			event.FirstTime.Format("02.01.2006 15:04:05"),
+			event.Door.Name,
+			helpers.ColorizedDenied(event.Action),
+			event.Employee.Company.Name,
+			event.Employee.FullName,
+		)
+	}
+	defer rows.Close()
+
+	return nil
 }

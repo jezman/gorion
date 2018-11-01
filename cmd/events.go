@@ -47,6 +47,7 @@ var eventsCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(eventsCmd)
+	eventsCmd.AddCommand(tailCmd)
 
 	eventsCmd.Flags().StringVarP(&employee, "employee", "e", "", "employee last name. Use: 'gorion list employees' to get a list of all employees.")
 	eventsCmd.Flags().UintVarP(&door, "door", "d", 0, "door ID. Use: 'gorion list doors' to get a list of all doors with ID.")

@@ -123,3 +123,29 @@ func TestEventsValue(t *testing.T) {
 		t.Errorf("error was not expected while gets events values %q ", err)
 	}
 }
+
+func TestEventsTail(t *testing.T) {
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a strub database connection", err)
+	}
+	defer db.Close()
+
+	app := &DB{DB: db}
+
+	column := []string{"Time", "firstName", "midName", "lastName", "Company", "Door", "Event"}
+	rows := sqlmock.NewRows(column).
+		AddRow("firstName", "midName", "lastName", "company", time.Now(), "door", "action")
+
+	interval := time.Duration(5)
+	timeNow := time.Now().Local()
+	backForSeconds := timeNow.Add(time.Second * -interval)
+
+	mock.ExpectQuery(helpers.TestQueryEvents).
+		WithArgs(backForSeconds.Format("02.01.2006 15:04:05"), timeNow.Format("02.01.2006 15:04:05")).
+		WillReturnRows(rows)
+
+	if err := app.EventsTail(interval); err != nil {
+		t.Errorf("error was not expected while gets all events %q ", err)
+	}
+}
