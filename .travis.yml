@@ -6,3 +6,9 @@ go:
 before_install:
   - go get -t -v ./...
   - go get -t github.com/DATA-DOG/go-sqlmock
+
+script:
+  - ./go.test.sh
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

@@ -1,8 +1,7 @@
 # Gorion
 
-[![Build Status](https://travis-ci.org/jezman/gorion.svg?branch=master)](https://travis-ci.org/jezman/gorion)
+[![Build Status](https://travis-ci.org/jezman/gorion.svg?branch=master)](https://travis-ci.org/jezman/gorion) [![codecov](https://codecov.io/gh/jezman/gorion/branch/master/graph/badge.svg)](https://codecov.io/gh/jezman/gorion) [![Go Report Card](https://goreportcard.com/badge/github.com/jezman/gorion)](https://goreportcard.com/report/github.com/jezman/gorion)
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/jezman/gorion)](https://goreportcard.com/report/github.com/jezman/gorion)
 
 Reports view for access control system NVP Bolid "Orion Pro"
 
