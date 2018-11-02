@@ -4,7 +4,7 @@ import (
 	"regexp"
 )
 
-// ValidationEmployee validation employee flag
+// ValidationEmployee validation worker flag
 // return false if value don't match regexp
 func ValidationEmployee(value string) bool {
 	if match, _ := regexp.MatchString(

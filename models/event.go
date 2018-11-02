@@ -17,7 +17,7 @@ var (
 
 // Event model
 type Event struct {
-	Employee    Employee
+	Worker      Worker
 	FirstTime   time.Time
 	LastTime    time.Time
 	Company     Company
@@ -30,21 +30,21 @@ type Event struct {
 
 // Events gets the list of events for the time period
 // return pointer to Event struct and error
-func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied bool) ([]*Event, error) {
+func (db *DB) Events(firstDate, lastDate, worker string, door uint, denied bool) ([]*Event, error) {
 	// change the query depending on the input flag
 	switch {
-	case door != 0 && employee != "":
-		if !helpers.ValidationEmployee(employee) {
-			fmt.Print("invalid employee. allowed only letters")
+	case door != 0 && worker != "":
+		if !helpers.ValidationEmployee(worker) {
+			fmt.Print("invalid worker. allowed only letters")
 			os.Exit(1)
 		}
-		rows, err = db.Query(helpers.QueryEventsByEmployeeAndDoor, firstDate, lastDate, employee, door)
-	case employee != "":
-		if !helpers.ValidationEmployee(employee) {
-			fmt.Print("invalid employee. allowed only letters")
+		rows, err = db.Query(helpers.QueryEventsByEmployeeAndDoor, firstDate, lastDate, worker, door)
+	case worker != "":
+		if !helpers.ValidationEmployee(worker) {
+			fmt.Print("invalid worker. allowed only letters")
 			os.Exit(1)
 		}
-		rows, err = db.Query(helpers.QueryEventsByEmployee, firstDate, lastDate, employee)
+		rows, err = db.Query(helpers.QueryEventsByEmployee, firstDate, lastDate, worker)
 	case door != 0:
 		rows, err = db.Query(helpers.QueryEventsByDoor, firstDate, lastDate, door)
 	case denied:
@@ -62,10 +62,10 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 	for rows.Next() {
 		event := new(Event)
 		err = rows.Scan(
-			&event.Employee.LastName,
-			&event.Employee.FirstName,
-			&event.Employee.MidName,
-			&event.Employee.Company.Name,
+			&event.Worker.LastName,
+			&event.Worker.FirstName,
+			&event.Worker.MidName,
+			&event.Worker.Company.Name,
 			&event.FirstTime,
 			&event.Action,
 			&event.Door.Name,
@@ -74,8 +74,8 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 			return nil, err
 		}
 
-		event.Employee.FullName = event.Employee.LastName + " " +
-			event.Employee.FirstName + " " + event.Employee.MidName
+		event.Worker.FullName = event.Worker.LastName + " " +
+			event.Worker.FirstName + " " + event.Worker.MidName
 
 		event.WorkedTime = event.LastTime.Sub(event.FirstTime)
 
@@ -89,22 +89,22 @@ func (db *DB) Events(firstDate, lastDate, employee string, door uint, denied boo
 
 }
 
-// WorkedTime gets the list of employees and
+// WorkedTime gets the list of workers and
 // calculates their worked time
 // return pointer to Event struct and error
-func (db *DB) WorkedTime(firstDate, lastDate, employee, company string) ([]*Event, error) {
+func (db *DB) WorkedTime(firstDate, lastDate, worker, company string) ([]*Event, error) {
 	if !helpers.ValidationDate(firstDate) || !helpers.ValidationDate(lastDate) {
 		fmt.Print("invalid date. corrects format: DD.MM.YYYY or DD-MM-YYYY")
 		os.Exit(1)
 	}
 
 	switch {
-	case employee != "":
-		if !helpers.ValidationEmployee(employee) {
-			fmt.Print("invalid employee. allowed only letters")
+	case worker != "":
+		if !helpers.ValidationEmployee(worker) {
+			fmt.Print("invalid worker. allowed only letters")
 			os.Exit(1)
 		}
-		rows, err = db.Query(helpers.QueryWorkedTimeByEmployee, firstDate, lastDate, employee)
+		rows, err = db.Query(helpers.QueryWorkedTimeByEmployee, firstDate, lastDate, worker)
 	case company != "":
 		rows, err = db.Query(helpers.QueryWorkedTimeByCompany, firstDate, lastDate, company)
 	default:
@@ -120,10 +120,10 @@ func (db *DB) WorkedTime(firstDate, lastDate, employee, company string) ([]*Even
 	for rows.Next() {
 		event := new(Event)
 		err = rows.Scan(
-			&event.Employee.LastName,
-			&event.Employee.FirstName,
-			&event.Employee.MidName,
-			&event.Employee.Company.Name,
+			&event.Worker.LastName,
+			&event.Worker.FirstName,
+			&event.Worker.MidName,
+			&event.Worker.Company.Name,
 			&event.FirstTime,
 			&event.LastTime,
 		)
@@ -132,8 +132,8 @@ func (db *DB) WorkedTime(firstDate, lastDate, employee, company string) ([]*Even
 			return nil, err
 		}
 
-		event.Employee.FullName = event.Employee.LastName + " " +
-			event.Employee.FirstName + " " + event.Employee.MidName
+		event.Worker.FullName = event.Worker.LastName + " " +
+			event.Worker.FirstName + " " + event.Worker.MidName
 
 		event.WorkedTime = event.LastTime.Sub(event.FirstTime)
 
@@ -187,10 +187,10 @@ func (db *DB) EventsTail(interval time.Duration) error {
 	for rows.Next() {
 		event := new(Event)
 		err := rows.Scan(
-			&event.Employee.LastName,
-			&event.Employee.FirstName,
-			&event.Employee.MidName,
-			&event.Employee.Company.Name,
+			&event.Worker.LastName,
+			&event.Worker.FirstName,
+			&event.Worker.MidName,
+			&event.Worker.Company.Name,
 			&event.FirstTime,
 			&event.Action,
 			&event.Door.Name,
@@ -200,15 +200,15 @@ func (db *DB) EventsTail(interval time.Duration) error {
 			return err
 		}
 
-		event.Employee.FullName = event.Employee.LastName + " " +
-			event.Employee.FirstName + " " + event.Employee.MidName
+		event.Worker.FullName = event.Worker.LastName + " " +
+			event.Worker.FirstName + " " + event.Worker.MidName
 
 		fmt.Println(
 			event.FirstTime.Format("02.01.2006 15:04:05"),
 			event.Door.Name,
 			helpers.ColorizedDenied(event.Action),
-			event.Employee.Company.Name,
-			event.Employee.FullName,
+			event.Worker.Company.Name,
+			event.Worker.FullName,
 		)
 	}
 	defer rows.Close()

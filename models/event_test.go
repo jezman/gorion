@@ -12,7 +12,7 @@ var (
 	timeNow   = time.Now().Local()
 	firstDate = timeNow.Format("02.01.2006")
 	lastDate  = timeNow.AddDate(0, 0, 1).Format("02.01.2006")
-	employee  = "Employee"
+	worker    = "Worker"
 	company   = "Company"
 	door      = uint(22)
 	denied    = true
@@ -40,19 +40,19 @@ func TestEvents(t *testing.T) {
 	}
 
 	mock.ExpectQuery(helpers.TestQueryEventsByEmployeeAndDoor).
-		WithArgs(firstDate, lastDate, employee, door).
+		WithArgs(firstDate, lastDate, worker, door).
 		WillReturnRows(rows)
 
-	if _, err = app.Events(firstDate, lastDate, employee, door, false); err != nil {
-		t.Errorf("error was not expected while gets events by employee and door %q ", err)
+	if _, err = app.Events(firstDate, lastDate, worker, door, false); err != nil {
+		t.Errorf("error was not expected while gets events by worker and door %q ", err)
 	}
 
 	mock.ExpectQuery(helpers.TestQueryEventsByEmployee).
-		WithArgs(firstDate, lastDate, employee).
+		WithArgs(firstDate, lastDate, worker).
 		WillReturnRows(rows)
 
-	if _, err = app.Events(firstDate, lastDate, employee, 0, false); err != nil {
-		t.Errorf("error was not expected while gets events by employee %q ", err)
+	if _, err = app.Events(firstDate, lastDate, worker, 0, false); err != nil {
+		t.Errorf("error was not expected while gets events by worker %q ", err)
 	}
 
 	mock.ExpectQuery(helpers.TestQueryEventsByDoor).
@@ -99,7 +99,7 @@ func TestWorkedTime(t *testing.T) {
 
 	mock.ExpectQuery(helpers.TestQueryWorkedTimeByEmployee).WillReturnRows(rows)
 
-	if _, err = app.WorkedTime(firstDate, lastDate, employee, ""); err != nil {
+	if _, err = app.WorkedTime(firstDate, lastDate, worker, ""); err != nil {
 		t.Errorf("error was not expected while gets worked time %q ", err)
 	}
 }

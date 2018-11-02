@@ -25,32 +25,32 @@ func Preparing(data interface{}, headers ...interface{}) *termtables.Table {
 		for i, c := range companies {
 			table.AddRow(i+1, c.Name, c.CountOfEmployees)
 		}
-	case []*models.Employee:
-		employees := data.([]*models.Employee)
-		for i, e := range employees {
-			table.AddRow(i+1, e.FullName, e.Company.Name)
+	case []*models.Worker:
+		workers := data.([]*models.Worker)
+		for i, w := range workers {
+			table.AddRow(i+1, w.FullName, w.Company.Name)
 		}
 	case []*models.Event:
 		events := data.([]*models.Event)
-		for _, e := range events {
+		for _, w := range events {
 			switch {
-			case e.WorkedTime > 0:
+			case w.WorkedTime > 0:
 				table.AddRow(
-					e.Employee.FullName,
-					e.Employee.Company.Name,
-					e.FirstTime.Format("02-01-2006 15:04:05"),
-					e.LastTime.Format("02-01-2006 15:04:05"),
-					e.WorkedTime,
+					w.Worker.FullName,
+					w.Worker.Company.Name,
+					w.FirstTime.Format("02-01-2006 15:04:05"),
+					w.LastTime.Format("02-01-2006 15:04:05"),
+					w.WorkedTime,
 				)
-			case e.Description != "" && e.ID != "":
-				table.AddRow(e.ID, e.Action, e.Description)
-			case e.Door.Name != "":
+			case w.Description != "" && w.ID != "":
+				table.AddRow(w.ID, w.Action, w.Description)
+			case w.Door.Name != "":
 				table.AddRow(
-					e.FirstTime.Format("15:04:05 02-01-2006"),
-					e.Employee.FullName,
-					e.Employee.Company.Name,
-					e.Door.Name,
-					helpers.ColorizedDenied(e.Action),
+					w.FirstTime.Format("15:04:05 02-01-2006"),
+					w.Worker.FullName,
+					w.Worker.Company.Name,
+					w.Door.Name,
+					helpers.ColorizedDenied(w.Action),
 				)
 			}
 		}

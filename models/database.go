@@ -1,15 +1,15 @@
 package models
 
 import (
-	"time"
 	"database/sql"
+	"time"
 )
 
 // Datastore methods
 type Datastore interface {
 	Company() ([]*Company, error)
 	Doors() ([]*Door, error)
-	Employees(string) ([]*Employee, error)
+	Workers(string) ([]*Worker, error)
 	Events(string, string, string, uint, bool) ([]*Event, error)
 	EventsValues() ([]*Event, error)
 	EventsTail(time.Duration) error

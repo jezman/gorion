@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	employee  string
+	worker    string
 	err       error
 	denied    bool
 	door      uint

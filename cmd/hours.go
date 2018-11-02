@@ -12,20 +12,20 @@ var hoursCmd = &cobra.Command{
 	Use:     "hours",
 	Aliases: []string{"h"},
 	Example: `  gorion hours
-  gorion hours --employee=lastname --first=05.08.2017 --last=07.08.2017
+  gorion hours --worker=lastname --first=05.08.2017 --last=07.08.2017
   gorion h -e lastname
   gorion h -f 12.11.2017 -l 16.11.2107`,
-	Short: "Displays employees worked time",
+	Short: "Displays workers worked time",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
 		defer db.Close()
 
-		events, err := env.WorkedTime(firstDate, lastDate, employee, companyName)
+		events, err := env.WorkedTime(firstDate, lastDate, worker, companyName)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		table = render.Preparing(events, "Employee", "Company", "First event", "Last event", "Worked time")
+		table = render.Preparing(events, "Worker", "Company", "First event", "Last event", "Worked time")
 		fmt.Println(table.Render())
 	},
 }
@@ -33,7 +33,7 @@ var hoursCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(hoursCmd)
 
-	hoursCmd.Flags().StringVarP(&employee, "employee", "e", "", "employee last name. Use: 'gorion list employees' to get a list of all employees.")
+	hoursCmd.Flags().StringVarP(&worker, "worker", "e", "", "worker last name. Use: 'gorion list workers' to get a list of all workers.")
 	hoursCmd.Flags().StringVarP(&firstDate, "first", "f", timeNow.Format("02.01.2006"), "first date")
 	hoursCmd.Flags().StringVarP(&lastDate, "last", "l", timeNow.AddDate(0, 0, 1).Format("02.01.2006"), "last date.")
 	hoursCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")

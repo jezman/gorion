@@ -14,7 +14,7 @@ var eventsCmd = &cobra.Command{
 	Use:     "events",
 	Aliases: []string{"e"},
 	Example: `  gorion events
-  gorion events --employee=lastname --first=05.08.2017
+  gorion events --worker=lastname --first=05.08.2017
   gorion e -e lastname -d 32
   gorion e -d 2 -f 12.11.2017 -l 16.11.2107
   gorion e -f '12.11.2017 21:00'`,
@@ -33,12 +33,12 @@ var eventsCmd = &cobra.Command{
 			table = render.Preparing(values, "ID", "Value", "Description")
 
 		} else {
-			events, err := env.Events(firstDate, lastDate, employee, door, denied)
+			events, err := env.Events(firstDate, lastDate, worker, door, denied)
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			table = render.Preparing(events, "Time", "Employee", "Company", "Door", "Event")
+			table = render.Preparing(events, "Time", "Worker", "Company", "Door", "Event")
 		}
 
 		fmt.Println(table.Render())
@@ -49,7 +49,7 @@ func init() {
 	rootCmd.AddCommand(eventsCmd)
 	eventsCmd.AddCommand(tailCmd)
 
-	eventsCmd.Flags().StringVarP(&employee, "employee", "e", "", "employee last name. Use: 'gorion list employees' to get a list of all employees.")
+	eventsCmd.Flags().StringVarP(&worker, "worker", "e", "", "worker last name. Use: 'gorion list workers' to get a list of all workers.")
 	eventsCmd.Flags().UintVarP(&door, "door", "d", 0, "door ID. Use: 'gorion list doors' to get a list of all doors with ID.")
 	eventsCmd.Flags().StringVarP(&firstDate, "first", "f", timeNow.Format("02.01.2006"), "first date")
 	eventsCmd.Flags().StringVarP(&lastDate, "last", "l", timeNow.AddDate(0, 0, 1).Format("02.01.2006"), "last date.")

@@ -14,7 +14,7 @@ func TestCompany(t *testing.T) {
 	}
 	defer db.Close()
 
-	rows := sqlmock.NewRows([]string{"Company", "Employees"}).
+	rows := sqlmock.NewRows([]string{"Company", "Workers"}).
 		AddRow("company 1", "2").
 		AddRow("company 2", "5")
 

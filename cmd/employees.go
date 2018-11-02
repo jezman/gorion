@@ -7,21 +7,21 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// employeesCmd represents the employees command
+// employeesCmd represents the workers command
 var employeesCmd = &cobra.Command{
-	Use:     "employees",
+	Use:     "workers",
 	Aliases: []string{"e"},
-	Short:   "Displays a list of employees",
+	Short:   "Displays a list of workers",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
 		defer db.Close()
 
-		employees, err := env.Employees(companyName)
+		workers, err := env.Workers(companyName)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		table = render.Preparing(employees, "#", "Employee", "Company")
+		table = render.Preparing(workers, "#", "Worker", "Company")
 		fmt.Println(table.Render())
 	},
 }

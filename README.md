@@ -28,7 +28,7 @@ Otherwise, please see [Go install](https://golang.org/doc/install).
   - companies
     - all
     - by name
-  - employees
+  - workers
     - all
     - by company name
   - doors
@@ -37,12 +37,12 @@ Otherwise, please see [Go install](https://golang.org/doc/install).
   - all
   - only denied
   - by door
-  - by employee last name
+  - by worker last name
   - date range
-- Employees worked time
+- Workers worked time
   - all
   - by company
-  - by employee last name
+  - by worker last name
   - date range
 
 ### For more info run `gorion` with `--help` flag
@@ -64,8 +64,8 @@ Usage:
 Available Commands:
   events      Displays a list of events depending on entered flags
   help        Help about any command
-  hours       Displays employees worked time
-  list        Get list of company, doors, employees
+  hours       Displays workers worked time
+  list        Get list of company, doors, workers
 
 Flags:
   -h, --help   help for gorion

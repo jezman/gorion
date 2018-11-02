@@ -19,19 +19,19 @@ var companyCmd = &cobra.Command{
 		defer db.Close()
 
 		if companyName != "" {
-			employees, err := env.Employees(companyName)
+			workers, err := env.Workers(companyName)
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			table = render.Preparing(employees, "#", "Employee", "Company")
+			table = render.Preparing(workers, "#", "Worker", "Company")
 		} else {
 			companies, err := env.Company()
 			if err != nil {
 				fmt.Println(err)
 			}
 
-			table = render.Preparing(companies, "#", "Company", "Employees")
+			table = render.Preparing(companies, "#", "Company", "Workers")
 		}
 
 		fmt.Println(table.Render())

@@ -16,7 +16,7 @@ func TestEmployee(t *testing.T) {
 	}
 	for _, test := range tests {
 		if got := ValidationEmployee(test.input); got != test.want {
-			t.Errorf("Employee(%q) is %v. Need %v", test.input, test.want, got)
+			t.Errorf("Worker(%q) is %v. Need %v", test.input, test.want, got)
 		}
 	}
 }
@@ -34,7 +34,7 @@ func TestDate(t *testing.T) {
 	}
 	for _, test := range tests {
 		if got := ValidationDate(test.input); got != test.want {
-			t.Errorf("Employee(%q) is %v. Need %v", test.input, test.want, got)
+			t.Errorf("Worker(%q) is %v. Need %v", test.input, test.want, got)
 		}
 	}
 }

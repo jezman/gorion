@@ -26,13 +26,13 @@ func TestEmployees(t *testing.T) {
 
 	mock.ExpectQuery(helpers.TestQueryEmployees).WillReturnRows(rows)
 
-	if _, err = app.Employees(""); err != nil {
-		t.Errorf("error was not expected while gets employee %q ", err)
+	if _, err = app.Workers(""); err != nil {
+		t.Errorf("error was not expected while gets worker %q ", err)
 	}
 
 	mock.ExpectQuery(helpers.TestQueryEmployeesByCompany).WithArgs("company").WillReturnRows(rows)
 
-	if _, err = app.Employees("company"); err != nil {
-		t.Errorf("error was not expected while gets employee by company %q ", err)
+	if _, err = app.Workers("company"); err != nil {
+		t.Errorf("error was not expected while gets worker by company %q ", err)
 	}
 }
