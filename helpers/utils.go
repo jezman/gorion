@@ -14,3 +14,12 @@ func ColorizedDenied(event string) string {
 
 	return event
 }
+
+// ColorizedWorker fullname
+func ColorizedWorker(str, substr string) string {
+	if substr != "" && strings.Contains(str, strings.Title(substr)) {
+		return color.Yellow(str)
+	}
+
+	return str
+}

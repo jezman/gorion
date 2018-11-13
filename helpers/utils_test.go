@@ -7,7 +7,7 @@ import (
 )
 
 func TestColorizedDenied(t *testing.T) {
-	var tests = []struct {
+	var testCases = []struct {
 		input string
 		want  string
 	}{
@@ -16,9 +16,28 @@ func TestColorizedDenied(t *testing.T) {
 		{"начало отклонен конец", color.Red("начало отклонен конец")},
 		{"начало Запрет конец", color.Red("начало Запрет конец")},
 	}
-	for _, test := range tests {
+	for _, test := range testCases {
 		if got := ColorizedDenied(test.input); got != test.want {
-			t.Errorf("Worker(%q) is %v. Need %v", test.input, test.want, got)
+			t.Errorf("Event(%q) is %q. Need %q", test.input, got, test.want)
 		}
 	}
+}
+
+func TestColorizedWorker(t *testing.T) {
+	var testCases = []struct {
+		fullName string
+		substr string
+		want  string
+	}{
+		{"Иванов", "Иванов", color.Yellow("Иванов")},
+		{"Иванов", "иванов", color.Yellow("Иванов")},
+		{"Петров", "Иванов", "Петров"},
+		{"Петров", "", "Петров"},
+	}
+	for _, test := range testCases {
+		if got := ColorizedWorker(test.fullName, test.substr); got != test.want {
+			t.Errorf("Worker(%q) is %q. Need %q", test.fullName, got, test.want)
+		}
+	}
+
 }
