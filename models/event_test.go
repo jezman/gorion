@@ -145,7 +145,7 @@ func TestEventsTail(t *testing.T) {
 		WithArgs(backForSeconds.Format("02.01.2006 15:04:05"), timeNow.Format("02.01.2006 15:04:05")).
 		WillReturnRows(rows)
 
-	if err := app.EventsTail(interval); err != nil {
+	if err := app.EventsTail(interval, ""); err != nil {
 		t.Errorf("error was not expected while gets all events %q ", err)
 	}
 }
