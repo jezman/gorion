@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"errors"
 	"strings"
 
 	"github.com/bclicn/color"
@@ -22,4 +23,16 @@ func ColorizedWorker(str, substr string) string {
 	}
 
 	return str
+}
+
+// SplitFullName return array of three elements: [first|mid|last]name
+func SplitFullName(name string) ([]string, error) {
+	name = strings.Title(strings.Trim(name, " "))
+	fullName := strings.Split(name, " ")
+
+	if len(fullName) != 3 {
+		return nil, errors.New("need first, mid and last name")
+	}
+
+	return fullName, nil
 }

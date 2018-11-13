@@ -51,3 +51,31 @@ func (db *DB) Workers(companyName string) ([]*Worker, error) {
 
 	return workers, nil
 }
+
+// AddWorker to ACS
+func (db *DB) AddWorker(name string) (err error) {
+	tx, err := db.Begin()
+	if err != nil {
+		return
+	}
+
+	defer func() {
+		switch err {
+		case nil:
+			err = tx.Commit()
+		default:
+			tx.Rollback()
+		}
+	}()
+
+	fullName, err := helpers.SplitFullName(name)
+	if err != nil {
+		return
+	}
+
+	if _, err = tx.Exec(helpers.AddWorker, fullName[0], fullName[1], fullName[2]); err != nil {
+		return
+	}
+
+	return
+}

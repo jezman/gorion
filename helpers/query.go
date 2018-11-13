@@ -82,4 +82,10 @@ const (
 		GROUP BY c.Name`
 	QueryDoors = "SELECT GIndex, Name FROM AcessPoint ORDER BY GIndex"
 	QueryEventsValues = "SELECT Event, Contents, Comment from Events"
+	AddCompany = "" // TODO: 
+	AddWorker = `DECLARE @pID int
+		SELECT @pID = MAX(ID)+1 FROM pList
+		INSERT INTO pList (ID, Status, Name, FirstName, MidName)
+		VALUES(@pID, 5, ?1, ?2, ?3)`
+	DeleteWorker = `` // TODO:
 )

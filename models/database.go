@@ -7,6 +7,7 @@ import (
 
 // Datastore methods
 type Datastore interface {
+	AddWorker(string) error
 	Company() ([]*Company, error)
 	Doors() ([]*Door, error)
 	Workers(string) ([]*Worker, error)

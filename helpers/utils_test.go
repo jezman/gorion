@@ -26,8 +26,8 @@ func TestColorizedDenied(t *testing.T) {
 func TestColorizedWorker(t *testing.T) {
 	var testCases = []struct {
 		fullName string
-		substr string
-		want  string
+		substr   string
+		want     string
 	}{
 		{"Иванов", "Иванов", color.Yellow("Иванов")},
 		{"Иванов", "иванов", color.Yellow("Иванов")},
@@ -40,4 +40,22 @@ func TestColorizedWorker(t *testing.T) {
 		}
 	}
 
+}
+
+func TestSplitFullName(t *testing.T) {
+	var testCases = []struct {
+		fullName string
+		want     []string
+	}{
+		{"Иванов Иван Иванович", []string{"Иванов", "Иван", "Иванович"}},
+		{" иванов иван иванович", []string{"Иванов", "Иван", "Иванович"}},
+		{"Иванов Иван ", nil},
+		{" Иван ", nil},
+	}
+
+	for _, test := range testCases {
+		if got, _ := SplitFullName(test.fullName); len(got) != len(test.want) {
+			t.Errorf("length error: got - %v, want - %v", got, test.want)
+		}
+	}
 }
