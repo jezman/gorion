@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 
 	"github.com/jezman/gorion/helpers"
 )
@@ -73,9 +74,51 @@ func (db *DB) AddWorker(name string) (err error) {
 		return
 	}
 
-	if _, err = tx.Exec(helpers.AddWorker, fullName[0], fullName[1], fullName[2]); err != nil {
+	if _, err = tx.Exec(helpers.QueryAddWorker, fullName[0], fullName[1], fullName[2]); err != nil {
 		return
 	}
 
 	return
+}
+
+// DeleteWorker from ACS database
+func (db *DB) DeleteWorker(name string) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		switch err {
+		case nil:
+			err = tx.Commit()
+		default:
+			tx.Rollback()
+		}
+	}()
+
+	fullName, err := helpers.SplitFullName(name)
+	if err != nil {
+		return err
+	}
+
+	rows, err = db.Query(helpers.QueryFindWorker, fullName[0], fullName[1], fullName[2])
+	defer rows.Close()
+	if err != nil {
+		return err
+	}
+
+	if !rows.Next() {
+		return errors.New("worker not found")
+	}
+
+	if _, err = tx.Exec(helpers.QueryDeleteWorkerCards, name); err != nil {
+		return err
+	}
+
+	if _, err = tx.Exec(helpers.QueryDeleteWorker, fullName[0], fullName[1], fullName[2]); err != nil {
+		return err
+	}
+
+	return err
 }
