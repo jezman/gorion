@@ -12,7 +12,7 @@ type Datastore interface {
 	Workers(string) ([]*Worker, error)
 	Events(string, string, string, uint, bool) ([]*Event, error)
 	EventsValues() ([]*Event, error)
-	EventsTail(time.Duration) error
+	EventsTail(time.Duration, string) error
 	WorkedTime(string, string, string, string) ([]*Event, error)
 }
 

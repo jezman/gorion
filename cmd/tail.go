@@ -21,7 +21,7 @@ var tailCmd = &cobra.Command{
 		defer db.Close()
 
 		for range tick {
-			if err := env.EventsTail(intervalDuration); err != nil {
+			if err := env.EventsTail(intervalDuration, worker); err != nil {
 				fmt.Println(err)
 			}
 		}
@@ -30,4 +30,5 @@ var tailCmd = &cobra.Command{
 
 func init() {
 	tailCmd.Flags().IntVarP(&interval, "interval", "i", 5, "sql queries interval")
+	tailCmd.Flags().StringVarP(&worker, "worker", "w", "", "worker first, mid or last name. Colorize worker. Use: 'gorion list workers' to get a list of all workers.")
 }

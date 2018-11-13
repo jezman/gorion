@@ -171,7 +171,8 @@ func (db *DB) EventsValues() ([]*Event, error) {
 	return eventValues, nil
 }
 
-func (db *DB) EventsTail(interval time.Duration) error {
+// EventsTail puts tail events to STDOUT.
+func (db *DB) EventsTail(interval time.Duration, worker string) error {
 	timeNow := time.Now().Local()
 	backForSeconds := timeNow.Add(time.Second * -interval)
 
@@ -208,7 +209,7 @@ func (db *DB) EventsTail(interval time.Duration) error {
 			event.Door.Name,
 			helpers.ColorizedDenied(event.Action),
 			event.Worker.Company.Name,
-			event.Worker.FullName,
+			helpers.ColorizedWorker(event.Worker.FullName, worker),
 		)
 	}
 	defer rows.Close()
