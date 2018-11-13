@@ -33,7 +33,7 @@ var hoursCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(hoursCmd)
 
-	hoursCmd.Flags().StringVarP(&worker, "worker", "e", "", "worker last name. Use: 'gorion list workers' to get a list of all workers.")
+	hoursCmd.Flags().StringVarP(&worker, "worker", "w", "", "worker last name. Use: 'gorion list workers' to get a list of all workers.")
 	hoursCmd.Flags().StringVarP(&firstDate, "first", "f", timeNow.Format("02.01.2006"), "first date")
 	hoursCmd.Flags().StringVarP(&lastDate, "last", "l", timeNow.AddDate(0, 0, 1).Format("02.01.2006"), "last date.")
 	hoursCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")

@@ -49,7 +49,7 @@ func init() {
 	rootCmd.AddCommand(eventsCmd)
 	eventsCmd.AddCommand(tailCmd)
 
-	eventsCmd.Flags().StringVarP(&worker, "worker", "e", "", "worker last name. Use: 'gorion list workers' to get a list of all workers.")
+	eventsCmd.Flags().StringVarP(&worker, "worker", "w", "", "worker last name. Use: 'gorion list workers' to get a list of all workers.")
 	eventsCmd.Flags().UintVarP(&door, "door", "d", 0, "door ID. Use: 'gorion list doors' to get a list of all doors with ID.")
 	eventsCmd.Flags().StringVarP(&firstDate, "first", "f", timeNow.Format("02.01.2006"), "first date")
 	eventsCmd.Flags().StringVarP(&lastDate, "last", "l", timeNow.AddDate(0, 0, 1).Format("02.01.2006"), "last date.")
