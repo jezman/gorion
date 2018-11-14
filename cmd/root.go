@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/apcera/termtables"
-	"github.com/jezman/gorion/models"
+	"github.com/jezman/libgorion"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ var (
 	door      uint
 	firstDate string
 	lastDate  string
-	env       models.Datastore
+	env       libgorion.Datastore
 	timeNow   = time.Now().Local()
 	table     *termtables.Table
 )
@@ -47,9 +47,9 @@ func Execute() {
 	}
 }
 
-func initDB() (db *models.DB) {
+func initDB() (db *libgorion.Database) {
 	dsn := os.Getenv("BOLID_DSN")
-	if db, err = models.OpenDB(dsn); err != nil {
+	if db, err = libgorion.OpenDB(dsn); err != nil {
 		panic(err)
 	}
 
