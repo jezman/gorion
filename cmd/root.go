@@ -47,7 +47,7 @@ func Execute() {
 	}
 }
 
-func initDB() (db *models.DB) {
+func initDB() (db *libgorion.Database) {
 	dsn := os.Getenv("BOLID_DSN")
 	if db, err = libgorion.OpenDB(dsn); err != nil {
 		panic(err)

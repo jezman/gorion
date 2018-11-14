@@ -1,8 +1,5 @@
 # Gorion
 
-[![Build Status](https://travis-ci.org/jezman/gorion.svg?branch=master)](https://travis-ci.org/jezman/gorion) [![codecov](https://codecov.io/gh/jezman/gorion/branch/master/graph/badge.svg)](https://codecov.io/gh/jezman/gorion) [![Go Report Card](https://goreportcard.com/badge/github.com/jezman/gorion)](https://goreportcard.com/report/github.com/jezman/gorion)
-
-
 Reports view for access control system NVP Bolid "Orion Pro"
 
 ## Installing
@@ -44,6 +41,9 @@ Otherwise, please see [Go install](https://golang.org/doc/install).
   - by company
   - by worker last name
   - date range
+- Workers
+  - add
+  - delete
 
 ### For more info run `gorion` with `--help` flag
 
@@ -62,6 +62,8 @@ Usage:
   gorion [command]
 
 Available Commands:
+  add         add worker to access control system
+  delete      delete workers from access control system
   events      Displays a list of events depending on entered flags
   help        Help about any command
   hours       Displays workers worked time
