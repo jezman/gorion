@@ -2,8 +2,7 @@ package render
 
 import (
 	"github.com/apcera/termtables"
-	"github.com/jezman/gorion/helpers"
-	"github.com/jezman/gorion/models"
+	"github.com/jezman/libgorion"
 )
 
 // Preparing data for output
@@ -15,23 +14,23 @@ func Preparing(data interface{}, headers ...interface{}) *termtables.Table {
 	}
 
 	switch data.(type) {
-	case []*models.Door:
-		doors := data.([]*models.Door)
+	case []*libgorion.Door:
+		doors := data.([]*libgorion.Door)
 		for _, d := range doors {
 			table.AddRow(d.ID, d.Name)
 		}
-	case []*models.Company:
-		companies := data.([]*models.Company)
+	case []*libgorion.Company:
+		companies := data.([]*libgorion.Company)
 		for i, c := range companies {
-			table.AddRow(i+1, c.Name, c.CountOfEmployees)
+			table.AddRow(i+1, c.Name, c.WorkersCount)
 		}
-	case []*models.Worker:
-		workers := data.([]*models.Worker)
+	case []*libgorion.Worker:
+		workers := data.([]*libgorion.Worker)
 		for i, w := range workers {
 			table.AddRow(i+1, w.FullName, w.Company.Name)
 		}
-	case []*models.Event:
-		events := data.([]*models.Event)
+	case []*libgorion.Event:
+		events := data.([]*libgorion.Event)
 		for _, w := range events {
 			switch {
 			case w.WorkedTime > 0:
@@ -50,7 +49,7 @@ func Preparing(data interface{}, headers ...interface{}) *termtables.Table {
 					w.Worker.FullName,
 					w.Worker.Company.Name,
 					w.Door.Name,
-					helpers.ColorizedDenied(w.Action),
+					libgorion.ColorizedDenied(w.Action),
 				)
 			}
 		}
