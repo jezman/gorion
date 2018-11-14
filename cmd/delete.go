@@ -11,10 +11,7 @@ var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "delete workers from access control system",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-		
-		if err := env.DeleteWorker(worker); err != nil {
+		if err := Env.DeleteWorker(worker); err != nil {
 			fmt.Println(err)
 		} else {
 			fmt.Println("worker successfully delete")

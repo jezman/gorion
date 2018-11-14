@@ -10,10 +10,7 @@ var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "add worker to access control system",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-		
-		if err := env.AddWorker(worker); err != nil {
+		if err := Env.AddWorker(worker); err != nil {
 			fmt.Println(err)
 		} else {
 			fmt.Println("worker successfully added")

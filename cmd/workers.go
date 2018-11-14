@@ -13,10 +13,7 @@ var workerCmd = &cobra.Command{
 	Aliases: []string{"w"},
 	Short:   "Displays a list of workers",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-
-		workers, err := env.Workers(companyName)
+		workers, err := Env.Workers(companyName)
 		if err != nil {
 			fmt.Println(err)
 		}

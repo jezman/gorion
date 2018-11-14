@@ -20,11 +20,8 @@ var eventsCmd = &cobra.Command{
   gorion e -f '12.11.2017 21:00'`,
 	Short: "Displays a list of events depending on entered flags",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-
 		if eventsTypes {
-			values, err := env.EventsValues()
+			values, err := Env.EventsValues()
 
 			if err != nil {
 				fmt.Println(err)
@@ -33,7 +30,7 @@ var eventsCmd = &cobra.Command{
 			table = render.Preparing(values, "ID", "Value", "Description")
 
 		} else {
-			events, err := env.Events(firstDate, lastDate, worker, door, denied)
+			events, err := Env.Events(firstDate, lastDate, worker, door, denied)
 			if err != nil {
 				fmt.Println(err)
 			}

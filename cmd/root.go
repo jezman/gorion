@@ -10,6 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// VERSION application
+const VERSION = "0.1.0"
+
 var (
 	worker    string
 	err       error
@@ -17,7 +20,7 @@ var (
 	door      uint
 	firstDate string
 	lastDate  string
-	env       libgorion.Datastore
+	Env       libgorion.Datastore
 	timeNow   = time.Now().Local()
 	table     *termtables.Table
 )
@@ -45,15 +48,4 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-}
-
-func initDB() (db *libgorion.Database) {
-	dsn := os.Getenv("BOLID_DSN")
-	if db, err = libgorion.OpenDB(dsn); err != nil {
-		panic(err)
-	}
-
-	// set environment
-	env = db
-	return
 }

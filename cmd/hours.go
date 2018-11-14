@@ -17,10 +17,7 @@ var hoursCmd = &cobra.Command{
   gorion h -f 12.11.2017 -l 16.11.2107`,
 	Short: "Displays workers worked time",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-
-		events, err := env.WorkedTime(firstDate, lastDate, worker, companyName)
+		events, err := Env.WorkedTime(firstDate, lastDate, worker, companyName)
 		if err != nil {
 			fmt.Println(err)
 		}

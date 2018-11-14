@@ -17,11 +17,8 @@ var tailCmd = &cobra.Command{
 		intervalDuration := time.Duration(interval)
 		tick := time.Tick(intervalDuration * time.Second)
 
-		db := initDB()
-		defer db.Close()
-
 		for range tick {
-			if err := env.EventsTail(intervalDuration, worker); err != nil {
+			if err := Env.EventsTail(intervalDuration, worker); err != nil {
 				fmt.Println(err)
 			}
 		}

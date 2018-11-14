@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/jezman/gorion/render"
 	"github.com/spf13/cobra"
+	"github.com/jezman/gorion/render"
 )
 
 // doorlistCmd represents the doorlist command
@@ -13,10 +13,7 @@ var doorsCmd = &cobra.Command{
 	Aliases: []string{"d"},
 	Short:   "List all doors with ID",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-
-		doors, err := env.Doors()
+		doors, err := Env.Doors()
 		if err != nil {
 			fmt.Println(err)
 		}

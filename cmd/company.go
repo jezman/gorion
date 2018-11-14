@@ -15,18 +15,15 @@ var companyCmd = &cobra.Command{
 	Aliases: []string{"c"},
 	Short:   "Displays a list of companies",
 	Run: func(cmd *cobra.Command, args []string) {
-		db := initDB()
-		defer db.Close()
-
 		if companyName != "" {
-			workers, err := env.Workers(companyName)
+			workers, err := Env.Workers(companyName)
 			if err != nil {
 				fmt.Println(err)
 			}
 
 			table = render.Preparing(workers, "#", "Worker", "Company")
 		} else {
-			companies, err := env.Company()
+			companies, err := Env.Company()
 			if err != nil {
 				fmt.Println(err)
 			}
