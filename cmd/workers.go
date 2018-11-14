@@ -7,10 +7,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// employeesCmd represents the workers command
-var employeesCmd = &cobra.Command{
-	Use:     "workers",
-	Aliases: []string{"e"},
+// workerCmd represents the workers command
+var workerCmd = &cobra.Command{
+	Use:     "worker",
+	Aliases: []string{"w"},
 	Short:   "Displays a list of workers",
 	Run: func(cmd *cobra.Command, args []string) {
 		db := initDB()
@@ -27,5 +27,5 @@ var employeesCmd = &cobra.Command{
 }
 
 func init() {
-	employeesCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")
+	workerCmd.Flags().StringVarP(&companyName, "company", "c", "", "company name")
 }
