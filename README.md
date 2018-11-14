@@ -47,7 +47,7 @@ Otherwise, please see [Go install](https://golang.org/doc/install).
 
 ### For more info run `gorion` with `--help` flag
 
-```bash
+```text
 $ gorion --help
  _____            _
 |  __ \          (_)
@@ -68,6 +68,7 @@ Available Commands:
   help        Help about any command
   hours       Displays workers worked time
   list        Get list of company, doors, workers
+  version     show application version
 
 Flags:
   -h, --help   help for gorion
