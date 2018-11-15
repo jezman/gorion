@@ -17,6 +17,8 @@ github.com/jezman/libgorion v0.1.3 h1:ziEZV56JY+hBxSZe/rgsI/SlqIJrAVgqC6iMT5gjSj
 github.com/jezman/libgorion v0.1.3/go.mod h1:PqCXqlJJzalgSi2MsUgPVYqUkplMb7dPf/LuABK2qIQ=
 github.com/jezman/libgorion v0.1.4 h1:fWTM8VdTRckF0gVstxclo+YQFQkxi0jX7NdbopiQJzk=
 github.com/jezman/libgorion v0.1.4/go.mod h1:PqCXqlJJzalgSi2MsUgPVYqUkplMb7dPf/LuABK2qIQ=
+github.com/jezman/libgorion v0.1.5 h1:gIsY3+RtPPpdPcbUehZHLXYNpQl1AnlN6bgZBzWwlUE=
+github.com/jezman/libgorion v0.1.5/go.mod h1:PqCXqlJJzalgSi2MsUgPVYqUkplMb7dPf/LuABK2qIQ=
 github.com/mattn/go-runewidth v0.0.3 h1:a+kO+98RDGEfo6asOGMmpodZq4FNtnGP54yps8BzLR4=
 github.com/mattn/go-runewidth v0.0.3/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
 github.com/spf13/cobra v0.0.3 h1:ZlrZ4XsMRm04Fr5pSFxBgfND2EBVa1nLpiy1stUsX/8=
