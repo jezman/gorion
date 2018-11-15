@@ -44,6 +44,8 @@ Otherwise, please see [Go install](https://golang.org/doc/install).
 - Workers
   - add
   - delete
+  - disable card
+  - enable card
 
 ### For more info run `gorion` with `--help` flag
 
@@ -64,6 +66,8 @@ Usage:
 Available Commands:
   add         add worker to access control system
   delete      delete workers from access control system
+  disable     disable worker card
+  enable      enable worker card
   events      Displays a list of events depending on entered flags
   help        Help about any command
   hours       Displays workers worked time
