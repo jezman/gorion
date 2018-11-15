@@ -2,17 +2,19 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
+
 var enableCmd = &cobra.Command{
 	Use:   "enable",
 	Short: "enable worker card",
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := Env.DisableWorkerCard(worker); err != nil {
+		if err := Env.EnableWorkerCard(worker); err != nil {
 			fmt.Println(err)
 		} else {
-			fmt.Printf("%s card enableed\n", worker)
+			fmt.Printf("%s card enabled\n", strings.Title(worker))
 		}
 	},
 }
