@@ -1,7 +1,7 @@
 package render
 
 import (
-	"github.com/apcera/termtables"
+	"github.com/scyllabd/termtables"
 	"github.com/jezman/libgorion"
 )
 

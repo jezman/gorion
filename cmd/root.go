@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/apcera/termtables"
+	"github.com/scyllabd/termtables"
 	"github.com/jezman/libgorion"
 	"github.com/spf13/cobra"
 )
