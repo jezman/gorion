@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/scyllabd/termtables"
+	"github.com/scylladb/termtables"
 	"github.com/jezman/libgorion"
 	"github.com/spf13/cobra"
 )

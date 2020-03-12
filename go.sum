@@ -26,6 +26,8 @@ github.com/jezman/libgorion v0.1.5 h1:gIsY3+RtPPpdPcbUehZHLXYNpQl1AnlN6bgZBzWwlU
 github.com/jezman/libgorion v0.1.5/go.mod h1:PqCXqlJJzalgSi2MsUgPVYqUkplMb7dPf/LuABK2qIQ=
 github.com/mattn/go-runewidth v0.0.3 h1:a+kO+98RDGEfo6asOGMmpodZq4FNtnGP54yps8BzLR4=
 github.com/mattn/go-runewidth v0.0.3/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
+github.com/scylladb/termtables v1.0.0 h1:uUnesUY4V1VPCotpOQLb1LjTXVvzwy7Ramx8K8+w+8U=
+github.com/scylladb/termtables v1.0.0/go.mod h1:C1a7PQSMz9NShzorzCiG2fk9+xuCgLkPeCvMHYR2OWg=
 github.com/spf13/cobra v0.0.3 h1:ZlrZ4XsMRm04Fr5pSFxBgfND2EBVa1nLpiy1stUsX/8=
 github.com/spf13/cobra v0.0.3/go.mod h1:1l0Ry5zgKvJasoi3XT1TypsSe7PqH0Sj9dhYf7v3XqQ=
 github.com/spf13/pflag v1.0.3 h1:zPAT6CGy6wXeQ7NtTnaTerfKOsV6V6F8agHXFiazDkg=
